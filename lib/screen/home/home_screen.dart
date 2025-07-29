@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:helpers_hive/job_post/job_post.dart';
 import 'package:helpers_hive/screen/subscription/subscription.dart';
 import 'package:helpers_hive/utils/colors.dart';
@@ -32,7 +31,10 @@ class HomeScreen extends StatelessWidget {
             ]
             : [
               {'icon': Icons.post_add, 'title': 'Post a Job'},
-              {'icon': Icons.assignment_turned_in, 'title': 'Applications Status'},
+              {
+                'icon': Icons.assignment_turned_in,
+                'title': 'Applications Status',
+              },
               {'icon': Icons.unsubscribe, 'title': 'Subscriptions'},
               {'icon': Icons.notifications, 'title': 'Notifications'},
               {'icon': Icons.chat, 'title': 'Chat for Help'},
@@ -42,14 +44,23 @@ class HomeScreen extends StatelessWidget {
             ];
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(title: const Text('Welcome! Suhel Athmad', style: TextStyle(fontSize: 18)), backgroundColor: Colors.white),
+      appBar: AppBar(
+        title: const Text(
+          'Welcome! Suhel Athmad',
+          style: TextStyle(fontSize: 18),
+        ),
+        backgroundColor: Colors.white,
+      ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(color: primaryBg),
-              child: Text('Menu', style: TextStyle(color: Colors.white, fontSize: 24)),
+              child: Text(
+                'Menu',
+                style: TextStyle(color: Colors.white, fontSize: 24),
+              ),
             ),
             ...menuItems.map(
               (item) => ListTile(
@@ -67,7 +78,9 @@ class HomeScreen extends StatelessWidget {
                       break;
                     case 'Log-Out':
                       await FirebaseAuth.instance.signOut();
-                      Get.offAll(() => SignInScreen()); // Replace with your sign-in screen widget
+                      Get.offAll(
+                        () => SignInScreen(),
+                      ); // Replace with your sign-in screen widget
                       break;
                     // Add other navigation cases if needed
                   }
@@ -94,8 +107,13 @@ class HomeScreen extends StatelessWidget {
                               prefixIcon: const Icon(Icons.search),
                               filled: true,
                               fillColor: Colors.grey[200],
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide.none,
+                              ),
                             ),
                           ),
                         ),
@@ -107,15 +125,30 @@ class HomeScreen extends StatelessWidget {
                                 padding: const EdgeInsets.all(16),
                                 decoration: const BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(20),
+                                  ),
                                 ),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text('Filter by Country', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                                    const Text(
+                                      'Filter by Country',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                     const SizedBox(height: 10),
-                                    ...['Saudia', 'Bahrain', 'Kuwait', 'Oman', 'Qatar', 'Iraq'].map((country) {
+                                    ...[
+                                      'Saudia',
+                                      'Bahrain',
+                                      'Kuwait',
+                                      'Oman',
+                                      'Qatar',
+                                      'Iraq',
+                                    ].map((country) {
                                       return ListTile(
                                         title: Text(country),
                                         onTap: () {
@@ -130,12 +163,22 @@ class HomeScreen extends StatelessWidget {
                               ),
                             );
                           },
-                          child: Image.asset('assets/images/filter.png', width: 40, height: 40),
+                          child: Image.asset(
+                            'assets/images/filter.png',
+                            width: 40,
+                            height: 40,
+                          ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 20),
-                    const Text('Featured Jobs', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const Text(
+                      'Featured Jobs',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(height: 10),
                     SizedBox(
                       height: 120,
@@ -150,22 +193,41 @@ class HomeScreen extends StatelessWidget {
                                 // color: Colors.white,
                                 border: Border.all(color: Colors.grey.shade300),
                                 borderRadius: BorderRadius.circular(8),
-                                boxShadow: [BoxShadow(color: Colors.grey.shade200, blurRadius: 4)],
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.shade200,
+                                    blurRadius: 4,
+                                  ),
+                                ],
                               ),
                               padding: const EdgeInsets.all(12),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Featured Job ${index + 1}', style: const TextStyle(fontWeight: FontWeight.bold)),
+                                  Text(
+                                    'Featured Job ${index + 1}',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                   const Spacer(),
-                                  const Text('QAR 3,000/mo', style: TextStyle(color: primaryBg)),
+                                  const Text(
+                                    'QAR 3,000/mo',
+                                    style: TextStyle(color: primaryBg),
+                                  ),
                                 ],
                               ),
                             ),
                       ),
                     ),
                     const SizedBox(height: 30),
-                    const Text('Jobs for You', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const Text(
+                      'Jobs for You',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(height: 10),
                     ListView.builder(
                       shrinkWrap: true,
@@ -185,16 +247,34 @@ class HomeScreen extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Job Title ${index + 1}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                Text(
+                                  'Job Title ${index + 1}',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                                 const SizedBox(height: 8),
-                                const Text('Salary: QAR 2,000 - QAR 3,000', style: TextStyle(color: primaryBg)),
+                                const Text(
+                                  'Salary: QAR 2,000 - QAR 3,000',
+                                  style: TextStyle(color: primaryBg),
+                                ),
                                 const SizedBox(height: 12),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: const [
-                                    Text('2d ago', style: TextStyle(color: Colors.black, fontSize: 12)),
+                                    Text(
+                                      '2d ago',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                      ),
+                                    ),
                                     SizedBox(width: 8),
-                                    Icon(Icons.bookmark_border, color: Colors.black),
+                                    Icon(
+                                      Icons.bookmark_border,
+                                      color: Colors.black,
+                                    ),
                                   ],
                                 ),
                               ],
@@ -218,12 +298,23 @@ class HomeScreen extends StatelessWidget {
                         prefixIcon: const Icon(Icons.search),
                         filled: true,
                         fillColor: Colors.grey[200],
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text('Featured Profiles', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const Text(
+                      'Featured Profiles',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(height: 10),
                     SizedBox(
                       height: 140,
@@ -237,9 +328,18 @@ class HomeScreen extends StatelessWidget {
                                   context: context,
                                   builder:
                                       (_) => AlertDialog(
-                                        title: const Text('Subscription Required'),
-                                        content: const Text('QAR 10 for viewing a helper\'s profile'),
-                                        actions: [NextButton(label: 'Subscribe', onPressed: () {})],
+                                        title: const Text(
+                                          'Subscription Required',
+                                        ),
+                                        content: const Text(
+                                          'QAR 10 for viewing a helper\'s profile',
+                                        ),
+                                        actions: [
+                                          NextButton(
+                                            label: 'Subscribe',
+                                            onPressed: () {},
+                                          ),
+                                        ],
                                       ),
                                 );
                               },
@@ -248,21 +348,38 @@ class HomeScreen extends StatelessWidget {
                                 margin: const EdgeInsets.only(right: 12),
                                 decoration: BoxDecoration(
                                   // color: Colors.white,
-                                  border: Border.all(color: Colors.grey.shade300),
+                                  border: Border.all(
+                                    color: Colors.grey.shade300,
+                                  ),
                                   borderRadius: BorderRadius.circular(8),
-                                  boxShadow: [BoxShadow(color: Colors.grey.shade200, blurRadius: 4)],
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.shade200,
+                                      blurRadius: 4,
+                                    ),
+                                  ],
                                 ),
                                 padding: const EdgeInsets.all(12),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('John Doe ${index + 1}', style: const TextStyle(fontWeight: FontWeight.bold)),
+                                    Text(
+                                      'John Doe ${index + 1}',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                     const SizedBox(height: 8),
-                                    const Text('Experienced housekeeper with 5 years in UAE.'),
+                                    const Text(
+                                      'Experienced housekeeper with 5 years in UAE.',
+                                    ),
                                     const Spacer(),
                                     const Align(
                                       alignment: Alignment.bottomRight,
-                                      child: Text('Philippines', style: TextStyle(color: primaryBg)),
+                                      child: Text(
+                                        'Philippines',
+                                        style: TextStyle(color: primaryBg),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -271,7 +388,13 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 30),
-                    const Text('Profiles for You', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const Text(
+                      'Profiles for You',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(height: 10),
                     ListView.builder(
                       shrinkWrap: true,
@@ -285,8 +408,15 @@ class HomeScreen extends StatelessWidget {
                               builder:
                                   (_) => AlertDialog(
                                     title: const Text('Subscription Required'),
-                                    content: const Text('QAR 10 for viewing a helper\'s profile'),
-                                    actions: [NextButton(label: 'Subscribe', onPressed: () {})],
+                                    content: const Text(
+                                      'QAR 10 for viewing a helper\'s profile',
+                                    ),
+                                    actions: [
+                                      NextButton(
+                                        label: 'Subscribe',
+                                        onPressed: () {},
+                                      ),
+                                    ],
                                   ),
                             );
                           },
@@ -305,14 +435,24 @@ class HomeScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     'Jane Smith ${index + 1}',
-                                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                   const SizedBox(height: 8),
-                                  const Text('Nanny with 3 years of experience working with toddlers and infants.'),
+                                  const Text(
+                                    'Nanny with 3 years of experience working with toddlers and infants.',
+                                  ),
                                   const SizedBox(height: 12),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
-                                    children: const [Text('India', style: TextStyle(color: primaryBg))],
+                                    children: const [
+                                      Text(
+                                        'India',
+                                        style: TextStyle(color: primaryBg),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),

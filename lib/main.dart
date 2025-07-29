@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:helpers_hive/screen/splash/splash_screen.dart';
 import 'package:helpers_hive/utils/app_texts.dart';
 import 'package:helpers_hive/utils/routes.dart';
-
 import 'firebase_options.dart';
 
 void main() async {
@@ -23,7 +22,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: appName,
-      theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      ),
       initialRoute: AppRoutes.splashScreen,
       getPages: AppRoutes.pages,
       home: SplashScreen(),
