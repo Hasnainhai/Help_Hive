@@ -92,6 +92,7 @@ class HomeScreen extends StatelessWidget {
       ),
       body:
           isHelper
+              // Helper
               ? SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
                 child: Column(
@@ -286,6 +287,7 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               )
+              // HelpSeeker
               : SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
                 child: Column(
