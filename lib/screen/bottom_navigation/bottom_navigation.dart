@@ -32,12 +32,20 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
       ];
       navItems = const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.settings_applications), label: 'Applications'),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.settings_applications),
+          label: 'Applications',
+        ),
         BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
       ];
     } else {
-      pages = [HomeScreen(userRole: widget.userRole), BookmarkScreen(), ChatScreen(), ProfileScreen(userRole: widget.userRole)];
+      pages = [
+        HomeScreen(userRole: widget.userRole),
+        BookmarkScreen(),
+        ChatScreen(),
+        ProfileScreen(userRole: widget.userRole),
+      ];
       navItems = const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
         BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: 'SavedJob'),
@@ -54,7 +62,13 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10, offset: Offset(0, -2))],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
+              offset: Offset(0, -2),
+            ),
+          ],
         ),
         child: BottomNavigationBar(
           currentIndex: currentIndex,
