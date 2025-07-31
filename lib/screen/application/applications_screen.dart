@@ -8,7 +8,6 @@ class ApplicationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ApplicationsController());
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
