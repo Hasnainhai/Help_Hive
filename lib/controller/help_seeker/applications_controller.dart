@@ -69,4 +69,13 @@ class ApplicationsController extends GetxController {
       },
     ];
   }
+
+  // List<Map<String, dynamic>> get pendingApplications =>
+  //     applications.where((app) => app['status'] == 'Pending').toList();
+
+  // List<Map<String, dynamic>> get acceptedApplications =>
+  //     applications.where((app) => app['status'] == 'Accepted').toList();
+
+  // List<Map<String, dynamic>> get rejectedApplications =>
+  //     applications.where((app) => app['status'] == 'Rejected').toList();
 }
