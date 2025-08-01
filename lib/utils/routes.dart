@@ -8,6 +8,7 @@ import 'package:helpers_hive/screen/complete_profile/personal_helper_screen.dart
 import 'package:helpers_hive/screen/home/home_screen.dart';
 import 'package:helpers_hive/screen/onboarding/onboarding_screen.dart';
 
+import '../screen/application/applications_screen.dart';
 import '../screen/auth/signin_screen.dart';
 import '../screen/bottom_navigation/bottom_navigation.dart';
 import '../screen/splash/splash_screen.dart';
@@ -24,7 +25,13 @@ class AppRoutes {
   static const String bottomNav = '/bottomNav';
   static const String seekerPrimaryInfo = '/seekerPrimaryInfo';
   static const String locationDetailScreen = '/locationDetailScreen';
+  static const String applicationsScreen = '/applicationsScreen';
   static List<GetPage> pages = [
+    GetPage(
+      name: applicationsScreen,
+      page: () => ApplicationsScreen(),
+      // binding: ApplicationsBinding(),
+    ),
     GetPage(name: splashScreen, page: () => SplashScreen()),
     GetPage(name: onboardingScreen, page: () => OnboardingScreen()),
     GetPage(name: signup, page: () => SignupScreen()),
@@ -33,7 +40,10 @@ class AppRoutes {
     GetPage(name: helperGenderScreen, page: () => PersonalScreen()),
     GetPage(name: jobSelection, page: () => JobSelection()),
     GetPage(name: homeScreen, page: () => HomeScreen(userRole: Get.arguments)),
-    GetPage(name: bottomNav, page: () => BottomNavScreen(userRole: Get.arguments)),
+    GetPage(
+      name: bottomNav,
+      page: () => BottomNavScreen(userRole: Get.arguments),
+    ),
     GetPage(name: seekerPrimaryInfo, page: () => InfoSeekerScreen()),
     GetPage(name: locationDetailScreen, page: () => InfoRegionSeekerScreen()),
   ];
