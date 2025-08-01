@@ -7,7 +7,7 @@ class ApplicationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ApplicationsController());
+    final controller = Get.find<ApplicationsController>();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -29,7 +29,7 @@ class ApplicationsScreen extends StatelessWidget {
               elevation: 3,
               margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Padding(
-                padding: EdgeInsetsGeometry.all(8),
+                padding: EdgeInsets.all(8),
                 child: ListTile(
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(application['imageUrl']),
