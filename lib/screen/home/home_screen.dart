@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:helpers_hive/job_post/job_post.dart';
+import 'package:helpers_hive/screen/application/applications_screen.dart';
 import 'package:helpers_hive/screen/subscription/subscription.dart';
 import 'package:helpers_hive/utils/colors.dart';
 
@@ -75,6 +76,9 @@ class HomeScreen extends StatelessWidget {
                       break;
                     case 'Subscriptions':
                       Get.to(() => SubscriptionScreen(userRole: userRole));
+                      break;
+                    case 'Applications Status':
+                      Get.to(() => ApplicationsScreen());
                       break;
                     case 'Log-Out':
                       await FirebaseAuth.instance.signOut();

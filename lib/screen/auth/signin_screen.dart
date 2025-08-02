@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:helpers_hive/screen/bottom_navigation/bottom_navigation.dart';
-import 'package:helpers_hive/utils/routes.dart';
 import 'package:helpers_hive/utils/widgets/custom_text_field.dart';
 import 'package:helpers_hive/utils/widgets/next_button.dart';
 import 'package:sign_in_button/sign_in_button.dart';
@@ -21,7 +20,12 @@ class SignInScreen extends StatelessWidget {
     final password = _passwordController.text.trim();
 
     if (email.isEmpty || password.isEmpty) {
-      Get.snackbar('Error', 'Email and password cannot be empty', backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        'Email and password cannot be empty',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
       return;
     }
 
@@ -29,14 +33,21 @@ class SignInScreen extends StatelessWidget {
       isLoading.value = true;
 
       // Sign in the user
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
       final uid = userCredential.user?.uid;
       if (uid == null) throw Exception('User ID not found');
 
-      final userDoc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      final userDoc =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
       if (!userDoc.exists) {
-        Get.snackbar('Error', 'User data not found in database', backgroundColor: Colors.red, colorText: Colors.white);
+        Get.snackbar(
+          'Error',
+          'User data not found in database',
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
         return;
       }
 
@@ -44,9 +55,19 @@ class SignInScreen extends StatelessWidget {
 
       Get.offAll(BottomNavScreen(userRole: role));
     } on FirebaseAuthException catch (e) {
-      Get.snackbar('Sign-In Failed', e.message ?? 'An error occurred', backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar(
+        'Sign-In Failed',
+        e.message ?? 'An error occurred',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } catch (e) {
-      Get.snackbar('Error', e.toString(), backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } finally {
       isLoading.value = false;
     }
@@ -69,20 +90,39 @@ class SignInScreen extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 25,
                         backgroundColor: Colors.grey[200],
-                        child: Icon(Icons.arrow_back_ios, color: Colors.black, size: 18),
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.black,
+                          size: 18,
+                        ),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 20),
-                Center(child: Image.asset('assets/images/logo.png', width: 100, height: 100)),
+                Center(
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    width: 100,
+                    height: 100,
+                  ),
+                ),
                 const SizedBox(height: 10),
-                const Text("Sign in to your account", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600)),
-                Text('Welcome back! You have been missed', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                const Text(
+                  "Sign in to your account",
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  'Welcome back! You have been missed',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                ),
                 const SizedBox(height: 20),
                 _buildSignInForm(),
                 const SizedBox(height: 32),
-                const Text('Or Continue With', style: TextStyle(fontSize: 16, color: Colors.grey)),
+                const Text(
+                  'Or Continue With',
+                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                ),
                 const SizedBox(height: 32),
                 Container(
                   width: double.infinity,
@@ -129,7 +169,11 @@ class SignInScreen extends StatelessWidget {
                       onPressed: () => Get.toNamed('/signup'),
                       child: const Text(
                         "Sign Up",
-                        style: TextStyle(decoration: TextDecoration.underline, color: primaryBg, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: primaryBg,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],
@@ -152,16 +196,22 @@ class SignInScreen extends StatelessWidget {
         return; // User cancelled the sign-in
       }
 
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
 
-      final credential = GoogleAuthProvider.credential(accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
 
       // Sign in to Firebase with Google credentials
-      final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+      final UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithCredential(credential);
       final uid = userCredential.user?.uid;
       if (uid == null) throw Exception('User ID not found');
 
-      final userDoc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      final userDoc =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
       if (!userDoc.exists) {
         // If first-time sign in, create user document
@@ -177,7 +227,12 @@ class SignInScreen extends StatelessWidget {
 
       Get.offAll(BottomNavScreen(userRole: role));
     } catch (e) {
-      Get.snackbar('Google Sign-In Failed', e.toString(), backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar(
+        'Google Sign-In Failed',
+        e.toString(),
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } finally {
       isLoading.value = false;
     }
@@ -188,11 +243,20 @@ class SignInScreen extends StatelessWidget {
       () => Column(
         children: [
           CustomTextField(label: 'Email', controller: _emailController),
-          CustomTextField(label: 'Password', controller: _passwordController, isPassword: true),
+          CustomTextField(
+            label: 'Password',
+            controller: _passwordController,
+            isPassword: true,
+          ),
           const SizedBox(height: 8),
-          Align(alignment: Alignment.centerRight, child: Text('Forgot Password?', style: TextStyle(color: primaryBg))),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Text('Forgot Password?', style: TextStyle(color: primaryBg)),
+          ),
           const SizedBox(height: 8),
-          isLoading.value ? const CircularProgressIndicator() : NextButton(label: 'Sign In', onPressed: _signInUser),
+          isLoading.value
+              ? const CircularProgressIndicator()
+              : NextButton(label: 'Sign In', onPressed: _signInUser),
         ],
       ),
     );
