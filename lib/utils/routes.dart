@@ -25,13 +25,7 @@ class AppRoutes {
   static const String bottomNav = '/bottomNav';
   static const String seekerPrimaryInfo = '/seekerPrimaryInfo';
   static const String locationDetailScreen = '/locationDetailScreen';
-  static const String applicationsScreen = '/applicationsScreen';
   static List<GetPage> pages = [
-    GetPage(
-      name: applicationsScreen,
-      page: () => ApplicationsScreen(),
-      // binding: ApplicationsBinding(),
-    ),
     GetPage(name: splashScreen, page: () => SplashScreen()),
     GetPage(name: onboardingScreen, page: () => OnboardingScreen()),
     GetPage(name: signup, page: () => SignupScreen()),
