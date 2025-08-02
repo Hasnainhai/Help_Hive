@@ -9,6 +9,7 @@ import 'package:helpers_hive/utils/colors.dart';
 
 import '../../utils/widgets/next_button.dart';
 import '../auth/signin_screen.dart';
+import '../menuscreens/support_chat/support_chat_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final String userRole;
@@ -83,6 +84,9 @@ class HomeScreen extends StatelessWidget {
                       break;
                     case 'Notifications':
                       Get.to(() => NotificationsScreen());
+                      break;
+                    case 'Chat for Help':
+                      Get.to(() => SupportChatScreen());
                       break;
 
                     case 'Log-Out':
