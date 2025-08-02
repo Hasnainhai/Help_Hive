@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:helpers_hive/screen/bottom_navigation/bottom_navigation.dart';
 import 'package:helpers_hive/utils/colors.dart';
-import 'package:helpers_hive/utils/routes.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -21,7 +21,9 @@ class OnboardingScreen extends StatelessWidget {
               ),
             ),
             Positioned(
-              bottom: MediaQuery.of(context).viewPadding.bottom + 10, // Respect safe area
+              bottom:
+                  MediaQuery.of(context).viewPadding.bottom +
+                  10, // Respect safe area
               left: 20,
               right: 20,
               child: Column(
@@ -32,13 +34,19 @@ class OnboardingScreen extends StatelessWidget {
                     height: 55,
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.toNamed(AppRoutes.signup);
+                        // Get.toNamed(AppRoutes.signup);
+                        Get.to(BottomNavScreen(userRole: 'helpSeeker'));
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryBg,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
-                      child: const Text("Let's Get Started", style: TextStyle(fontSize: 18, color: Colors.white)),
+                      child: const Text(
+                        "Let's Get Started",
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
                     ),
                   ),
                 ],

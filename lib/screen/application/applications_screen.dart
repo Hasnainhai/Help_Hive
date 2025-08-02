@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import '../../controller/help_seeker/applications_controller.dart';
 
 class ApplicationsScreen extends StatelessWidget {
-  const ApplicationsScreen({super.key});
+  const ApplicationsScreen({super.key, required this.userRole});
+  final String userRole;
 
   @override
   Widget build(BuildContext context) {

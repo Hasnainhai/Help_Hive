@@ -19,11 +19,13 @@ class BottomNavScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isHelpSeeker = userRole == 'helpSeeker';
-    print('Loaded BottomNavScreen for role: $userRole');
+    print(
+      '..............................Loaded BottomNavScreen for role: $userRole',
+    );
 
     final List<Widget> seekerPages = [
       HomeScreen(userRole: userRole),
-      ApplicationsScreen(),
+      ApplicationsScreen(userRole: userRole),
       ChatScreen(),
       ProfileScreen(userRole: userRole),
     ];
