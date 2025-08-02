@@ -19,10 +19,15 @@ class HelpSeekerForm extends StatefulWidget {
 }
 
 class _HelpSeekerFormState extends State<HelpSeekerForm> {
-  final HelpSeekerController helpSeekerController = Get.put(HelpSeekerController());
-  final TextEditingController helperFirstNameController = TextEditingController();
-  final TextEditingController helperMiddleNameController = TextEditingController();
-  final TextEditingController helperLastNameController = TextEditingController();
+  final HelpSeekerController helpSeekerController = Get.put(
+    HelpSeekerController(),
+  );
+  final TextEditingController helperFirstNameController =
+      TextEditingController();
+  final TextEditingController helperMiddleNameController =
+      TextEditingController();
+  final TextEditingController helperLastNameController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +42,10 @@ class _HelpSeekerFormState extends State<HelpSeekerForm> {
             ),
           ),
 
-          CustomTextField(label: "Middle Name", controller: helperMiddleNameController),
+          CustomTextField(
+            label: "Middle Name",
+            controller: helperMiddleNameController,
+          ),
 
           Obx(
             () => CustomTextField(
@@ -50,10 +58,16 @@ class _HelpSeekerFormState extends State<HelpSeekerForm> {
           NextButton(
             label: 'Next',
             onPressed: () {
-              if (helpSeekerController.validateBasicInfo(helperFirstNameController.text, helperLastNameController.text)) {
-                helpSeekerController.firstName.value = helperFirstNameController.text;
-                helpSeekerController.middleName.value = helperMiddleNameController.text;
-                helpSeekerController.lastName.value = helperLastNameController.text;
+              if (helpSeekerController.validateBasicInfo(
+                helperFirstNameController.text,
+                helperLastNameController.text,
+              )) {
+                helpSeekerController.firstName.value =
+                    helperFirstNameController.text;
+                helpSeekerController.middleName.value =
+                    helperMiddleNameController.text;
+                helpSeekerController.lastName.value =
+                    helperLastNameController.text;
 
                 if (widget.tabController.index == 0) {
                   Get.toNamed('/seekerPrimaryInfo');
@@ -64,7 +78,10 @@ class _HelpSeekerFormState extends State<HelpSeekerForm> {
             },
           ),
           SizedBox(height: 32),
-          const Text('Or Continue With', style: TextStyle(fontSize: 16, color: Colors.grey)),
+          const Text(
+            'Or Continue With',
+            style: TextStyle(fontSize: 16, color: Colors.grey),
+          ),
           SizedBox(height: 32),
           Container(
             width: double.infinity,
@@ -110,25 +127,37 @@ class _HelpSeekerFormState extends State<HelpSeekerForm> {
                 text: 'Sign-up With Apple',
                 onPressed: () async {
                   try {
-                    final credential = await SignInWithApple.getAppleIDCredential(
-                      scopes: [AppleIDAuthorizationScopes.email, AppleIDAuthorizationScopes.fullName],
-                    );
+                    final credential =
+                        await SignInWithApple.getAppleIDCredential(
+                          scopes: [
+                            AppleIDAuthorizationScopes.email,
+                            AppleIDAuthorizationScopes.fullName,
+                          ],
+                        );
 
-                    final displayName = '${credential.givenName ?? ''} ${credential.familyName ?? ''}'.trim();
-                    final email = credential.email ?? 'hidden@apple.com'; // Apple sometimes hides it
+                    final displayName =
+                        '${credential.givenName ?? ''} ${credential.familyName ?? ''}'
+                            .trim();
+                    final email =
+                        credential.email ??
+                        'hidden@apple.com'; // Apple sometimes hides it
 
                     print('Apple Sign-in success: $displayName, $email');
 
                     await helpSeekerController.saveHelpSeekerProfile(
-                      role: 'seeker',
-                      displayName: displayName.isNotEmpty ? displayName : 'Apple User',
+                      role: 'helpSeeker',
+                      displayName:
+                          displayName.isNotEmpty ? displayName : 'Apple User',
                       googleEmail: email,
                     );
 
                     Get.to(BottomNavScreen(userRole: 'helpSeeker'));
                   } catch (e) {
                     print('Apple sign-in failed: $e');
-                    Get.snackbar('Sign-In Failed', 'Apple Sign-In was not successful');
+                    Get.snackbar(
+                      'Sign-In Failed',
+                      'Apple Sign-In was not successful',
+                    );
                   }
                 },
               ),
@@ -145,7 +174,11 @@ class _HelpSeekerFormState extends State<HelpSeekerForm> {
                 },
                 child: const Text(
                   "Sign In",
-                  style: TextStyle(decoration: TextDecoration.underline, color: primaryBg, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    color: primaryBg,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
