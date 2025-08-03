@@ -9,6 +9,7 @@ import 'package:helpers_hive/utils/colors.dart';
 
 import '../../utils/widgets/next_button.dart';
 import '../auth/signin_screen.dart';
+import '../menuscreens/settings_screen.dart';
 import '../menuscreens/support_chat/support_chat_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -29,7 +30,6 @@ class HomeScreen extends StatelessWidget {
               {'icon': Icons.settings, 'title': 'Settings'},
               {'icon': Icons.unsubscribe, 'title': 'Subscriptions'},
               {'icon': Icons.notifications, 'title': 'Notifications'},
-              {'icon': Icons.help_center, 'title': 'Help Center'},
               {'icon': Icons.logout, 'title': 'Log-Out'},
             ]
             : [
@@ -42,7 +42,6 @@ class HomeScreen extends StatelessWidget {
               {'icon': Icons.notifications, 'title': 'Notifications'},
               {'icon': Icons.chat, 'title': 'Chat for Help'},
               {'icon': Icons.settings, 'title': 'Settings'},
-              {'icon': Icons.help_center, 'title': 'Help Center'},
               {'icon': Icons.logout, 'title': 'Log-Out'},
             ];
     return Scaffold(
@@ -87,6 +86,9 @@ class HomeScreen extends StatelessWidget {
                       break;
                     case 'Chat for Help':
                       Get.to(() => SupportChatScreen());
+                      break;
+                    case 'Settings':
+                      Get.to(() => SettingsScreen());
                       break;
 
                     case 'Log-Out':
