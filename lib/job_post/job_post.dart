@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/instance_manager.dart';
 import 'package:helpers_hive/utils/widgets/next_button.dart';
 import '../utils/colors.dart';
 import '../utils/widgets/brief_description.dart';
-import '../utils/widgets/custom_text_field.dart';
 
 class JobPost extends StatefulWidget {
   const JobPost({super.key});
@@ -15,9 +16,23 @@ class _JobPostState extends State<JobPost> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
-  final List<String> salaryRanges = ['QAR 500 - 1000', 'QAR 2000 - 3000', 'QAR 3000 - 4000'];
-  final List<String> workingHours = List.generate(12, (index) => '${index + 1}');
-  final List<String> countries = ['Saudi Arabia', 'Bahrain', 'Kuwait', 'Oman', 'Qatar', 'Iraq'];
+  final List<String> salaryRanges = [
+    'QAR 500 - 1000',
+    'QAR 2000 - 3000',
+    'QAR 3000 - 4000',
+  ];
+  final List<String> workingHours = List.generate(
+    12,
+    (index) => '${index + 1}',
+  );
+  final List<String> countries = [
+    'Saudi Arabia',
+    'Bahrain',
+    'Kuwait',
+    'Oman',
+    'Qatar',
+    'Iraq',
+  ];
   String? selectedSalaryRange;
   String? selectedWorkingHours;
   String? selectedCountry;
@@ -32,32 +47,48 @@ class _JobPostState extends State<JobPost> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Select Role", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+            const Text(
+              "Select Role",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
             const SizedBox(height: 5),
             DropdownButtonFormField<String>(
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.grey[200],
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
               ),
               value: titleController.text.isEmpty ? null : titleController.text,
               hint: const Text("Select Role"),
               items:
-                  [
-                    'Nanny',
-                    'Home Cleaner',
-                    'House Maid',
-                  ].map((role) => DropdownMenuItem<String>(value: role, child: Text(role))).toList(),
+                  ['Nanny', 'Home Cleaner', 'House Maid']
+                      .map(
+                        (role) => DropdownMenuItem<String>(
+                          value: role,
+                          child: Text(role),
+                        ),
+                      )
+                      .toList(),
               onChanged: (value) {
                 setState(() {
                   titleController.text = value!;
                 });
               },
             ),
-            CustomBriefDescriptionField(label: "Job Description", controller: descriptionController, maxLength: 500),
+            CustomBriefDescriptionField(
+              label: "Job Description",
+              controller: descriptionController,
+              maxLength: 500,
+            ),
 
             const SizedBox(height: 16),
-            const Text("Job Type", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+            const Text(
+              "Job Type",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
             Row(
               children: [
                 Expanded(
@@ -90,19 +121,28 @@ class _JobPostState extends State<JobPost> {
             ),
 
             const SizedBox(height: 8),
-            const Text("Working Hours", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+            const Text(
+              "Working Hours",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
             const SizedBox(height: 5),
             DropdownButtonFormField<String>(
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.grey[200],
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
               ),
               value: selectedWorkingHours,
               hint: const Text("Select Working Hours"),
               items:
                   workingHours.map((hour) {
-                    return DropdownMenuItem<String>(value: hour, child: Text('$hour Hour${hour == '1' ? '' : 's'}'));
+                    return DropdownMenuItem<String>(
+                      value: hour,
+                      child: Text('$hour Hour${hour == '1' ? '' : 's'}'),
+                    );
                   }).toList(),
               onChanged: (value) {
                 setState(() {
@@ -112,19 +152,28 @@ class _JobPostState extends State<JobPost> {
             ),
 
             const SizedBox(height: 16),
-            const Text("Salary Range", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+            const Text(
+              "Salary Range",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
             const SizedBox(height: 5),
             DropdownButtonFormField<String>(
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.grey[200],
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
               ),
               value: selectedSalaryRange,
               hint: const Text("Select Salary Range"),
               items:
                   salaryRanges.map((range) {
-                    return DropdownMenuItem<String>(value: range, child: Text(range));
+                    return DropdownMenuItem<String>(
+                      value: range,
+                      child: Text(range),
+                    );
                   }).toList(),
               onChanged: (value) {
                 setState(() {
@@ -134,19 +183,28 @@ class _JobPostState extends State<JobPost> {
             ),
 
             const SizedBox(height: 16),
-            const Text("Country", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+            const Text(
+              "Country",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
             const SizedBox(height: 5),
             DropdownButtonFormField<String>(
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.grey[200],
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
               ),
               value: selectedCountry,
               hint: const Text("Select Country"),
               items:
                   countries.map((country) {
-                    return DropdownMenuItem<String>(value: country, child: Text(country));
+                    return DropdownMenuItem<String>(
+                      value: country,
+                      child: Text(country),
+                    );
                   }).toList(),
               onChanged: (value) {
                 setState(() {
@@ -159,6 +217,7 @@ class _JobPostState extends State<JobPost> {
             NextButton(
               label: 'Post a Job',
               onPressed: () {
+                Get.back();
                 // Handle submission logic
               },
             ),

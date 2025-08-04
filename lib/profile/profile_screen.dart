@@ -42,7 +42,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final joiningDateController = TextEditingController();
   final jobTitleController = TextEditingController();
   final salaryController = TextEditingController();
-  final List<String> noticeOptions = ['15 Days', '1 Month', '2 Month', '3 Month', 'Serving Notice Period'];
+  final List<String> noticeOptions = [
+    '15 Days',
+    '1 Month',
+    '2 Month',
+    '3 Month',
+    'Serving Notice Period',
+  ];
   File? _pickedImage;
   final picker = ImagePicker();
   final dobController = TextEditingController();
@@ -67,8 +73,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     'November',
     'December',
   ];
-  List<String> years = ['2020', '2021', '2022', '2023', '2024']; // Or any range of years you'd prefer
-  final TextEditingController briefDescriptionController = TextEditingController();
+  List<String> years = [
+    '2020',
+    '2021',
+    '2022',
+    '2023',
+    '2024',
+  ]; // Or any range of years you'd prefer
+  final TextEditingController briefDescriptionController =
+      TextEditingController();
   bool isPresent = false;
   File? _cvFile;
 
@@ -105,7 +118,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (picked != null) {
       setState(() {
         selectedDOB = picked;
-        dobController.text = '${picked.day.toString().padLeft(2, '0')}-${picked.month.toString().padLeft(2, '0')}-${picked.year}';
+        dobController.text =
+            '${picked.day.toString().padLeft(2, '0')}-${picked.month.toString().padLeft(2, '0')}-${picked.year}';
       });
     }
   }
@@ -113,7 +127,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Profile'), automaticallyImplyLeading: false),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: const Text('Profile'),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -132,18 +151,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           backgroundImage:
                               _pickedImage != null
                                   ? FileImage(_pickedImage!)
-                                  : const AssetImage('assets/images/logo.png') as ImageProvider,
+                                  : const AssetImage('assets/images/logo.png')
+                                      as ImageProvider,
                         ),
                         Container(
                           padding: const EdgeInsets.all(6),
-                          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-                          child: const Icon(Icons.edit, size: 20, color: Colors.black),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                          ),
+                          child: const Icon(
+                            Icons.edit,
+                            size: 20,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
                   ),
                   const SizedBox(height: 12),
-                  const Text('Suhel Ahmad', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  const Text(
+                    'Suhel Ahmad',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
                   const SizedBox(height: 20),
                 ],
               ),
@@ -153,9 +183,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Basic Information', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+                  const Text(
+                    'Basic Information',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  ),
                   IconButton(
-                    icon: Icon(isEditing ? Icons.close : Icons.edit, color: primaryBg),
+                    icon: Icon(
+                      isEditing ? Icons.close : Icons.edit,
+                      color: primaryBg,
+                    ),
                     onPressed: () {
                       setState(() {
                         isEditing = !isEditing;
@@ -168,25 +204,58 @@ class _ProfileScreenState extends State<ProfileScreen> {
               if (isEditing)
                 Column(
                   children: [
-                    CustomTextField(label: 'First Name', controller: seekerProfileController.firstNameController),
-                    CustomTextField(label: 'Middle Name', controller: seekerProfileController.middleNameController),
-                    CustomTextField(label: 'Last Name', controller: seekerProfileController.lastNameController),
-                    CustomTextField(label: 'Email', controller: emailController),
-                    CustomTextField(label: 'Country Name', controller: countryNameController),
+                    CustomTextField(
+                      label: 'First Name',
+                      controller: seekerProfileController.firstNameController,
+                    ),
+                    CustomTextField(
+                      label: 'Middle Name',
+                      controller: seekerProfileController.middleNameController,
+                    ),
+                    CustomTextField(
+                      label: 'Last Name',
+                      controller: seekerProfileController.lastNameController,
+                    ),
+                    CustomTextField(
+                      label: 'Email',
+                      controller: emailController,
+                    ),
+                    CustomTextField(
+                      label: 'Country Name',
+                      controller: countryNameController,
+                    ),
                     PhoneField(label: 'Phone', controller: phoneController),
-                    CustomTextField(label: 'Country', controller: countryController),
-                    CustomTextField(label: 'Website', controller: websiteController),
-                    CustomTextField(label: 'Address', controller: addressController),
-                    CustomTextField(label: 'ZipCode', controller: zipCodeController),
+                    CustomTextField(
+                      label: 'Country',
+                      controller: countryController,
+                    ),
+                    CustomTextField(
+                      label: 'Website',
+                      controller: websiteController,
+                    ),
+                    CustomTextField(
+                      label: 'Address',
+                      controller: addressController,
+                    ),
+                    CustomTextField(
+                      label: 'ZipCode',
+                      controller: zipCodeController,
+                    ),
                   ],
                 ),
             ] else ...[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Personal Details', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+                  const Text(
+                    'Personal Details',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  ),
                   IconButton(
-                    icon: Icon(isEditing ? Icons.close : Icons.edit, color: primaryBg),
+                    icon: Icon(
+                      isEditing ? Icons.close : Icons.edit,
+                      color: primaryBg,
+                    ),
                     onPressed: () {
                       setState(() {
                         isEditing = !isEditing;
@@ -199,15 +268,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
               if (isEditing)
                 Column(
                   children: [
-                    CustomTextField(label: 'First Name', controller: helperProfileController.firstNameController),
-                    CustomTextField(label: 'Middle Name', controller: helperProfileController.middleNameController),
-                    CustomTextField(label: 'Last Name', controller: helperProfileController.lastNameController),
+                    CustomTextField(
+                      label: 'First Name',
+                      controller: helperProfileController.firstNameController,
+                    ),
+                    CustomTextField(
+                      label: 'Middle Name',
+                      controller: helperProfileController.middleNameController,
+                    ),
+                    CustomTextField(
+                      label: 'Last Name',
+                      controller: helperProfileController.lastNameController,
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Padding(
                           padding: EdgeInsets.only(bottom: 8.0),
-                          child: Text('Gender', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                          child: Text(
+                            'Gender',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
                         Obx(
                           () => Row(
@@ -216,10 +300,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: RadioListTile<String>(
                                   title: const Text('Male'),
                                   value: 'Male',
-                                  groupValue: helperProfileController.selectedGender.value,
+                                  groupValue:
+                                      helperProfileController
+                                          .selectedGender
+                                          .value,
                                   activeColor: primaryBg,
                                   onChanged: (value) {
-                                    if (value != null) helperProfileController.selectedGender.value = value;
+                                    if (value != null)
+                                      helperProfileController
+                                          .selectedGender
+                                          .value = value;
                                   },
                                   contentPadding: EdgeInsets.zero,
                                   dense: true,
@@ -229,10 +319,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: RadioListTile<String>(
                                   title: const Text('Female'),
                                   value: 'Female',
-                                  groupValue: helperProfileController.selectedGender.value,
+                                  groupValue:
+                                      helperProfileController
+                                          .selectedGender
+                                          .value,
                                   activeColor: primaryBg,
                                   onChanged: (value) {
-                                    if (value != null) helperProfileController.selectedGender.value = value;
+                                    if (value != null)
+                                      helperProfileController
+                                          .selectedGender
+                                          .value = value;
                                   },
                                   contentPadding: EdgeInsets.zero,
                                   dense: true,
@@ -246,7 +342,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     GestureDetector(
                       onTap: () => _selectDOB(context),
                       child: AbsorbPointer(
-                        child: CustomTextField(label: 'Date of Birth', controller: helperProfileController.dobController),
+                        child: CustomTextField(
+                          label: 'Date of Birth',
+                          controller: helperProfileController.dobController,
+                        ),
                       ),
                     ),
                     CustomBriefDescriptionField(
@@ -258,11 +357,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Selected Roles', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+                          const Text(
+                            'Selected Roles',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                            ),
+                          ),
                           const SizedBox(height: 5),
                           ...allRoles.map((role) {
                             return CheckboxListTile(
-                              value: helperProfileController.selectedJobRoles.contains(role),
+                              value: helperProfileController.selectedJobRoles
+                                  .contains(role),
                               contentPadding: EdgeInsets.zero,
                               title: Text(role),
                               activeColor: primaryBg,
@@ -270,9 +376,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               onChanged: (bool? value) {
                                 setState(() {
                                   if (value == true) {
-                                    helperProfileController.selectedJobRoles.add(role);
+                                    helperProfileController.selectedJobRoles
+                                        .add(role);
                                   } else {
-                                    helperProfileController.selectedJobRoles.remove(role);
+                                    helperProfileController.selectedJobRoles
+                                        .remove(role);
                                   }
                                 });
                               },
@@ -288,9 +396,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Employment', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+                  Text(
+                    'Employment',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  ),
                   IconButton(
-                    icon: Icon(employmentEditing ? Icons.close : Icons.edit, color: primaryBg),
+                    icon: Icon(
+                      employmentEditing ? Icons.close : Icons.edit,
+                      color: primaryBg,
+                    ),
                     onPressed: () {
                       setState(() {
                         employmentEditing = !employmentEditing;
@@ -304,14 +418,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ...List.generate(helperProfileController.experiences.length, (index) => buildEmploymentForm(index)),
+                  ...List.generate(
+                    helperProfileController.experiences.length,
+                    (index) => buildEmploymentForm(index),
+                  ),
                   if (helperProfileController.experiences.length < 3)
                     TextButton.icon(
                       icon: Icon(Icons.add, color: primaryBg),
-                      label: Text('Add Experience', style: TextStyle(color: primaryBg)),
+                      label: Text(
+                        'Add Experience',
+                        style: TextStyle(color: primaryBg),
+                      ),
                       onPressed: () {
                         setState(() {
-                          helperProfileController.experiences.add(EmploymentExperience());
+                          helperProfileController.experiences.add(
+                            EmploymentExperience(),
+                          );
                         });
                       },
                     ),
@@ -324,18 +446,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     const SizedBox(height: 20),
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Text('Upload CV', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+                      child: Text(
+                        'Upload CV',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          _cvFile != null ? _cvFile!.path.split('/').last : 'No file selected',
+                          _cvFile != null
+                              ? _cvFile!.path.split('/').last
+                              : 'No file selected',
                           overflow: TextOverflow.ellipsis,
                         ),
                         TextButton.icon(
                           icon: Icon(Icons.upload_file, color: primaryBg),
-                          label: Text('Choose File', style: TextStyle(color: primaryBg)),
+                          label: Text(
+                            'Choose File',
+                            style: TextStyle(color: primaryBg),
+                          ),
                           onPressed: _pickCV,
                         ),
                       ],
@@ -360,7 +493,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('Employment', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+            const Text(
+              'Employment',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            ),
             if (helperProfileController.experiences.length > 1)
               IconButton(
                 icon: const Icon(Icons.delete, color: primaryBg),
@@ -372,83 +508,155 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Start Date', style: TextStyle(fontWeight: FontWeight.w600)),
-                Row(
-                  children: [
-                    DropdownButton<String>(
-                      value: experience.startMonth,
-                      items: months.map((month) => DropdownMenuItem(value: month, child: Text(month))).toList(),
-                      onChanged: (val) => setState(() => experience.startMonth = val),
-                      hint: const Text('Month'),
-                    ),
-                    const SizedBox(width: 10),
-                    DropdownButton<String>(
-                      value: experience.startYear,
-                      items: years.map((year) => DropdownMenuItem(value: year, child: Text(year))).toList(),
-                      onChanged: (val) => setState(() => experience.startYear = val),
-                      hint: const Text('Year'),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    const Text('End Date', style: TextStyle(fontWeight: FontWeight.w600)),
-                    Checkbox(
-                      value: experience.isPresent,
-                      activeColor: primaryBg,
-                      onChanged:
-                          (val) => setState(() {
-                            experience.isPresent = val!;
-                            if (val) {
-                              experience.endMonth = null;
-                              experience.endYear = null;
-                            }
-                          }),
-                    ),
-                    const Text('Present'),
-                  ],
-                ),
-                Row(
-                  children: [
-                    DropdownButton<String>(
-                      value: experience.endMonth,
-                      items: months.map((month) => DropdownMenuItem(value: month, child: Text(month))).toList(),
-                      onChanged: experience.isPresent ? null : (val) => setState(() => experience.endMonth = val),
-                      hint: const Text('Month'),
-                    ),
-                    const SizedBox(width: 10),
-                    DropdownButton<String>(
-                      value: experience.endYear,
-                      items: years.map((year) => DropdownMenuItem(value: year, child: Text(year))).toList(),
-                      onChanged: experience.isPresent ? null : (val) => setState(() => experience.endYear = val),
-                      hint: const Text('Year'),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Start Date',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  Row(
+                    children: [
+                      DropdownButton<String>(
+                        value: experience.startMonth,
+                        items:
+                            months
+                                .map(
+                                  (month) => DropdownMenuItem(
+                                    value: month,
+                                    child: Text(month),
+                                  ),
+                                )
+                                .toList(),
+                        onChanged:
+                            (val) =>
+                                setState(() => experience.startMonth = val),
+                        hint: const Text('Month'),
+                      ),
+                      const SizedBox(width: 10),
+                      DropdownButton<String>(
+                        value: experience.startYear,
+                        items:
+                            years
+                                .map(
+                                  (year) => DropdownMenuItem(
+                                    value: year,
+                                    child: Text(year),
+                                  ),
+                                )
+                                .toList(),
+                        onChanged:
+                            (val) => setState(() => experience.startYear = val),
+                        hint: const Text('Year'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text(
+                        'End Date',
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      Checkbox(
+                        value: experience.isPresent,
+                        activeColor: primaryBg,
+                        onChanged:
+                            (val) => setState(() {
+                              experience.isPresent = val!;
+                              if (val) {
+                                experience.endMonth = null;
+                                experience.endYear = null;
+                              }
+                            }),
+                      ),
+                      const Text(
+                        'Present',
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+
+                  Row(
+                    children: [
+                      DropdownButton<String>(
+                        value: experience.endMonth,
+                        items:
+                            months
+                                .map(
+                                  (month) => DropdownMenuItem(
+                                    value: month,
+                                    child: Text(month),
+                                  ),
+                                )
+                                .toList(),
+                        onChanged:
+                            experience.isPresent
+                                ? null
+                                : (val) =>
+                                    setState(() => experience.endMonth = val),
+                        hint: const Text('Month'),
+                      ),
+                      const SizedBox(width: 10),
+                      DropdownButton<String>(
+                        value: experience.endYear,
+                        items:
+                            years
+                                .map(
+                                  (year) => DropdownMenuItem(
+                                    value: year,
+                                    child: Text(year),
+                                  ),
+                                )
+                                .toList(),
+                        onChanged:
+                            experience.isPresent
+                                ? null
+                                : (val) =>
+                                    setState(() => experience.endYear = val),
+                        hint: const Text('Year'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
         Row(
           children: [
-            Expanded(child: CustomTextField(label: 'Position', controller: experience.positionController)),
+            Expanded(
+              child: CustomTextField(
+                label: 'Position',
+                controller: experience.positionController,
+              ),
+            ),
             const SizedBox(width: 10),
-            Expanded(child: CustomTextField(label: 'Employer', controller: experience.employerController)),
+            Expanded(
+              child: CustomTextField(
+                label: 'Employer',
+                controller: experience.employerController,
+              ),
+            ),
           ],
         ),
-        CustomTextField(label: 'Country', controller: experience.countryController),
-        CustomBriefDescriptionField(label: 'Job Description', controller: experience.jobDescController),
+        CustomTextField(
+          label: 'Country',
+          controller: experience.countryController,
+        ),
+        CustomBriefDescriptionField(
+          label: 'Job Description',
+          controller: experience.jobDescController,
+        ),
         const Divider(height: 40, thickness: 1),
       ],
     );

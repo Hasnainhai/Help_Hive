@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:helpers_hive/job_post/job_post.dart';
 import 'package:helpers_hive/screen/application/applications_screen.dart';
-import 'package:helpers_hive/screen/menuscreens/notifications_screen.dart';
+import 'package:helpers_hive/screen/menuscreens/notifications/notifications_screen.dart';
 import 'package:helpers_hive/screen/subscription/subscription.dart';
 import 'package:helpers_hive/utils/colors.dart';
 import 'package:helpers_hive/utils/widgets/next_button.dart';
@@ -96,13 +96,13 @@ class HomeScreen extends StatelessWidget {
         Get.to(() => ApplicationsScreen(userRole: userRole));
         break;
       case 'Notifications':
-        Get.to(() => NotificationsScreen());
+        Get.to(() => NotificationsScreen(userRole: userRole));
         break;
       case 'Chat for Help':
         Get.to(() => SupportChatScreen());
         break;
       case 'Settings':
-        Get.to(() => SettingsScreen());
+        Get.to(() => SettingsScreen(userRole: userRole));
         break;
       case 'My Applications':
         Get.to(() => HelperApplicationsScreen());
