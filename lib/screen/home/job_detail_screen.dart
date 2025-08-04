@@ -13,7 +13,9 @@ class JobDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         title: const Text('Job Details'),
+        centerTitle: true,
         actions: [
           IconButton(icon: const Icon(Icons.bookmark_border), onPressed: () {}),
         ],
