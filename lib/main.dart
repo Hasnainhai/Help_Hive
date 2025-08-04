@@ -6,6 +6,7 @@ import 'package:helpers_hive/utils/app_texts.dart';
 import 'package:helpers_hive/utils/routes.dart';
 import 'controller/bottomNavBar/BottomNavController.dart';
 import 'controller/help_seeker/applications_controller.dart';
+import 'controller/helper/helper_applications_controller.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -15,6 +16,7 @@ void main() async {
   runApp(const MyApp());
   Get.put(ApplicationsController());
   Get.put(BottomNavController());
+  Get.put(HelperApplicationsController());
 }
 
 class MyApp extends StatelessWidget {
