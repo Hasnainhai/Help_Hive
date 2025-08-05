@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:helpers_hive/job_post/job_post.dart';
 import 'package:helpers_hive/screen/application/applications_screen.dart';
+import 'package:helpers_hive/screen/home/help_seeker_details.dart';
 import 'package:helpers_hive/screen/menuscreens/notifications/notifications_screen.dart';
 import 'package:helpers_hive/screen/subscription/subscription.dart';
 import 'package:helpers_hive/utils/colors.dart';
@@ -10,6 +11,7 @@ import 'package:helpers_hive/utils/widgets/next_button.dart';
 import 'package:helpers_hive/screen/auth/signin_screen.dart';
 import 'package:helpers_hive/screen/menuscreens/settings_screen.dart';
 import 'package:helpers_hive/screen/menuscreens/support_chat/support_chat_screen.dart';
+import '../../models/help_seeker_profile_model.dart';
 import '../menuscreens/helperApplications/helper_applications_screen.dart';
 import 'job_detail_screen.dart';
 
@@ -181,6 +183,40 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  void _showFilterBottomSheet() {
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.all(16),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Filter by Country',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            ...['Saudia', 'Bahrain', 'Kuwait', 'Oman', 'Qatar', 'Iraq'].map((
+              country,
+            ) {
+              return ListTile(
+                title: Text(country),
+                onTap: () {
+                  Get.back();
+                  print('Selected country: $country');
+                },
+              );
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildFeaturedJobCard(int index) {
     return Container(
       width: 200,
@@ -318,13 +354,39 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  // Inside your stateful widget class
   Widget _buildHelpSeekerHome(BuildContext context) {
-    // HelpSeeker UI remains the same as original
+    // Sample data generation
+    final featuredProfiles = List.generate(
+      5,
+      (index) => HelpSeekerProfile(
+        name: 'John Doe ${index + 1}',
+        description: 'Experienced housekeeper with 5 years in UAE.',
+        country: 'Philippines',
+        experience: '${5 + index} years experience',
+        skills: 'Cleaning, Cooking, Laundry',
+        rating: 4.5 + (index * 0.1),
+      ),
+    );
+
+    final recommendedProfiles = List.generate(
+      5,
+      (index) => HelpSeekerProfile(
+        name: 'Jane Smith ${index + 1}',
+        description: 'Nanny with 3 years of experience working with toddlers.',
+        country: 'India',
+        experience: '${3 + index} years experience',
+        skills: 'Childcare, First Aid, Education',
+        rating: 4.8 - (index * 0.1),
+      ),
+    );
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Search field remains unchanged
           TextField(
             cursorColor: primaryBg,
             decoration: InputDecoration(
@@ -349,10 +411,14 @@ class HomeScreen extends StatelessWidget {
             height: 140,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 5,
+              itemCount: featuredProfiles.length,
               itemBuilder:
                   (context, index) => GestureDetector(
-                    onTap: () => _showSubscriptionDialog(context),
+                    onTap:
+                        () => _navigateToProfileDetails(
+                          context,
+                          featuredProfiles[index],
+                        ),
                     child: Container(
                       width: 220,
                       margin: const EdgeInsets.only(right: 12),
@@ -368,19 +434,17 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'John Doe ${index + 1}',
+                            featuredProfiles[index].name,
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 8),
-                          const Text(
-                            'Experienced housekeeper with 5 years in UAE.',
-                          ),
+                          Text(featuredProfiles[index].description),
                           const Spacer(),
-                          const Align(
+                          Align(
                             alignment: Alignment.bottomRight,
                             child: Text(
-                              'Philippines',
-                              style: TextStyle(color: primaryBg),
+                              featuredProfiles[index].country,
+                              style: const TextStyle(color: primaryBg),
                             ),
                           ),
                         ],
@@ -398,10 +462,14 @@ class HomeScreen extends StatelessWidget {
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 5,
+            itemCount: recommendedProfiles.length,
             itemBuilder: (context, index) {
               return GestureDetector(
-                onTap: () => _showSubscriptionDialog(context),
+                onTap:
+                    () => _navigateToProfileDetails(
+                      context,
+                      recommendedProfiles[index],
+                    ),
                 child: Card(
                   elevation: 1,
                   margin: const EdgeInsets.only(bottom: 16),
@@ -415,21 +483,22 @@ class HomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Jane Smith ${index + 1}',
+                          recommendedProfiles[index].name,
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 8),
-                        const Text(
-                          'Nanny with 3 years of experience working with toddlers and infants.',
-                        ),
+                        Text(recommendedProfiles[index].description),
                         const SizedBox(height: 12),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
-                          children: const [
-                            Text('India', style: TextStyle(color: primaryBg)),
+                          children: [
+                            Text(
+                              recommendedProfiles[index].country,
+                              style: const TextStyle(color: primaryBg),
+                            ),
                           ],
                         ),
                       ],
@@ -444,49 +513,64 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  void _showFilterBottomSheet() {
-    Get.bottomSheet(
-      Container(
-        padding: const EdgeInsets.all(16),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Filter by Country',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            ...['Saudia', 'Bahrain', 'Kuwait', 'Oman', 'Qatar', 'Iraq'].map((
-              country,
-            ) {
-              return ListTile(
-                title: Text(country),
-                onTap: () {
-                  Get.back();
-                  print('Selected country: $country');
-                },
-              );
-            }),
-          ],
-        ),
+  // Navigation function
+  void _navigateToProfileDetails(
+    BuildContext context,
+    HelpSeekerProfile profile,
+  ) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder:
+            (context) =>
+                HelpSeekerDetailsScreen(profile: profile, userRole: userRole),
       ),
     );
-  }
 
-  void _showSubscriptionDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder:
-          (_) => AlertDialog(
-            title: const Text('Subscription Required'),
-            content: const Text('QAR 10 for viewing a helper\'s profile'),
-            actions: [NextButton(label: 'Subscribe', onPressed: () {})],
+    void _showFilterBottomSheet() {
+      Get.bottomSheet(
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
           ),
-    );
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Filter by Country',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              ...['Saudia', 'Bahrain', 'Kuwait', 'Oman', 'Qatar', 'Iraq'].map((
+                country,
+              ) {
+                return ListTile(
+                  title: Text(country),
+                  onTap: () {
+                    Get.back();
+                    print('Selected country: $country');
+                  },
+                );
+              }),
+            ],
+          ),
+        ),
+      );
+    }
+
+    void _showSubscriptionDialog(BuildContext context) {
+      showDialog(
+        context: context,
+        builder:
+            (_) => AlertDialog(
+              title: const Text('Subscription Required'),
+              content: const Text('QAR 10 for viewing a helper\'s profile'),
+              actions: [NextButton(label: 'Subscribe', onPressed: () {})],
+            ),
+      );
+    }
   }
 }

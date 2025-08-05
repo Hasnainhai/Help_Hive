@@ -111,13 +111,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 const Divider(height: 1),
               ],
               _buildListTile(
-                icon: Icons.payment,
-                title: "Payment Methods",
-                subtitle: "Add or update payment options",
-                onTap: () => _navigateToPaymentMethods(),
-              ),
-              const Divider(height: 1),
-              _buildListTile(
                 icon: Icons.subscriptions,
                 title: "Subscription",
                 subtitle: "Manage your subscription plan",
@@ -171,44 +164,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               const Divider(height: 1),
-              // ListTile(
-              //   leading: Container(
-              //     padding: const EdgeInsets.all(8),
-              //     decoration: BoxDecoration(
-              //       color: Colors.deepPurple.shade50,
-              //       shape: BoxShape.circle,
-              //     ),
-              //     child: const Icon(Icons.language, color: Colors.deepPurple),
-              //   ),
-              //   title: const Text("Language"),
-              //   subtitle: const Text("Change app language"),
-              //   trailing: SizedBox(
-              //     width: 120,
-              //     child: DropdownButtonFormField<String>(
-              //       value: _selectedLanguage,
-              //       decoration: const InputDecoration(
-              //         border: OutlineInputBorder(),
-              //         contentPadding: EdgeInsets.symmetric(horizontal: 12),
-              //         isDense: true,
-              //       ),
-              //       items: const [
-              //         DropdownMenuItem(
-              //           value: 'English',
-              //           child: Text('English'),
-              //         ),
-              //         DropdownMenuItem(value: 'Arabic', child: Text('العربية')),
-              //         DropdownMenuItem(value: 'Hindi', child: Text('हिन्दी')),
-              //         DropdownMenuItem(
-              //           value: 'Tagalog',
-              //           child: Text('Tagalog'),
-              //         ),
-              //       ],
-              //       onChanged: (value) {
-              //         setState(() => _selectedLanguage = value!);
-              //       },
-              //     ),
-              //   ),
-              // ),
             ],
           ),
 

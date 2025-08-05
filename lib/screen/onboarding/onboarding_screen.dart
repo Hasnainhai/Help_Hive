@@ -35,7 +35,7 @@ class OnboardingScreen extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         // Get.toNamed(AppRoutes.signup);
-                        Get.to(() => BottomNavScreen(userRole: 'helpSeeker'));
+                        Get.to(() => BottomNavScreen(userRole: 'helper'));
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryBg,
