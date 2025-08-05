@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:helpers_hive/utils/colors.dart';
 
 class SupportChatWidget extends StatefulWidget {
   const SupportChatWidget({super.key});
@@ -95,7 +96,7 @@ class ChatScreenState extends State<SupportChatWidget> {
           ),
           const SizedBox(width: 8),
           IconButton(
-            icon: const Icon(Icons.send, color: Colors.deepPurple),
+            icon: const Icon(Icons.send, color: primaryBg),
             onPressed: () {
               if (_textController.text.isNotEmpty) {
                 _handleSubmitted(_textController.text);

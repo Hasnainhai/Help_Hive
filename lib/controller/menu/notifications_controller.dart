@@ -5,9 +5,18 @@ class NotificationsController extends GetxController {
   final String userRole;
   NotificationsController(this.userRole);
 
-  List<Map<String, String>> get notifications {
+  // Observable list
+  final RxList<Map<String, String>> notifications = <Map<String, String>>[].obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    loadNotifications();
+  }
+
+  void loadNotifications() {
     if (userRole == "helper") {
-      return [
+      notifications.value = [
         {
           "title": "Application Accepted!",
           "subtitle":
@@ -35,7 +44,7 @@ class NotificationsController extends GetxController {
         },
       ];
     } else {
-      return [
+      notifications.value = [
         {
           "title": "New Job Request",
           "subtitle": "You have received a job request from Sarah",
@@ -58,7 +67,7 @@ class NotificationsController extends GetxController {
     }
   }
 
-  // Helper-specific styling
+  // Same style methods as before...
   Color getHelperBackgroundColor(String type) {
     switch (type) {
       case 'accepted':
@@ -104,7 +113,6 @@ class NotificationsController extends GetxController {
     }
   }
 
-  // Seeker-specific styling
   Color getSeekerBackgroundColor(String type) {
     switch (type) {
       case 'helper':
