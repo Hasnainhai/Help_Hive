@@ -5,9 +5,8 @@ import 'package:helpers_hive/job_post/job_post.dart';
 import 'package:helpers_hive/screen/application/applications_screen.dart';
 import 'package:helpers_hive/screen/home/help_seeker_details.dart';
 import 'package:helpers_hive/screen/menuscreens/notifications/notifications_screen.dart';
-import 'package:helpers_hive/screen/subscription/subscription.dart';
+import 'package:helpers_hive/screen/subscription/subscription_screen.dart';
 import 'package:helpers_hive/utils/colors.dart';
-import 'package:helpers_hive/utils/widgets/next_button.dart';
 import 'package:helpers_hive/screen/auth/signin_screen.dart';
 import 'package:helpers_hive/screen/menuscreens/settings_screen.dart';
 import 'package:helpers_hive/screen/menuscreens/support_chat/support_chat_screen.dart';
@@ -526,51 +525,17 @@ class HomeScreen extends StatelessWidget {
                 HelpSeekerDetailsScreen(profile: profile, userRole: userRole),
       ),
     );
-
-    void _showFilterBottomSheet() {
-      Get.bottomSheet(
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Filter by Country',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              ...['Saudia', 'Bahrain', 'Kuwait', 'Oman', 'Qatar', 'Iraq'].map((
-                country,
-              ) {
-                return ListTile(
-                  title: Text(country),
-                  onTap: () {
-                    Get.back();
-                    print('Selected country: $country');
-                  },
-                );
-              }),
-            ],
-          ),
-        ),
-      );
-    }
-
-    void _showSubscriptionDialog(BuildContext context) {
-      showDialog(
-        context: context,
-        builder:
-            (_) => AlertDialog(
-              title: const Text('Subscription Required'),
-              content: const Text('QAR 10 for viewing a helper\'s profile'),
-              actions: [NextButton(label: 'Subscribe', onPressed: () {})],
-            ),
-      );
-    }
   }
+
+  // void _showSubscriptionDialog(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     builder:
+  //         (_) => AlertDialog(
+  //           title: const Text('Subscription Required'),
+  //           content: const Text('QAR 10 for viewing a helper\'s profile'),
+  //           actions: [NextButton(label: 'Subscribe', onPressed: () {})],
+  //         ),
+  //   );
+  // }
 }

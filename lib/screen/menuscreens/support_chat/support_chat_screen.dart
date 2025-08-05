@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../utils/colors.dart';
 import 'widgets/support_chat_widget.dart';
 
 class SupportChatScreen extends StatelessWidget {
@@ -11,7 +12,8 @@ class SupportChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: primaryBg,
+
       appBar: AppBar(
         toolbarHeight: 100,
         backgroundColor: Colors.transparent,

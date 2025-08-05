@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:helpers_hive/controller/subscription/subscription_controller.dart';
 import 'package:helpers_hive/screen/splash/splash_screen.dart';
 import 'package:helpers_hive/utils/app_texts.dart';
 import 'package:helpers_hive/utils/routes.dart';
@@ -17,6 +18,7 @@ void main() async {
   Get.put(ApplicationsController());
   Get.put(BottomNavController());
   Get.put(HelperApplicationsController());
+  Get.put(SubscriptionController());
 }
 
 class MyApp extends StatelessWidget {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/colors.dart';
+
 class ChatDetailScreen extends StatefulWidget {
   final String userName;
   final String userRole;
@@ -214,7 +216,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                 ),
                 const SizedBox(width: 8),
                 IconButton(
-                  icon: const Icon(Icons.send, color: Colors.deepPurple),
+                  icon: const Icon(Icons.send, color: primaryBg),
                   onPressed: _sendMessage,
                 ),
               ],
