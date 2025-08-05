@@ -26,14 +26,14 @@ class BottomNavScreen extends StatelessWidget {
     final List<Widget> seekerPages = [
       HomeScreen(userRole: userRole),
       ApplicationsScreen(userRole: userRole),
-      ChatScreen(),
+      ChatScreen(userRole: userRole),
       ProfileScreen(userRole: userRole),
     ];
 
     final List<Widget> providerPages = [
       HomeScreen(userRole: userRole),
       BookmarkScreen(),
-      ChatScreen(),
+      ChatScreen(userRole: userRole),
       ProfileScreen(userRole: userRole),
     ];
 

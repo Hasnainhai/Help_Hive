@@ -4,7 +4,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:helpers_hive/chat/chat_detail_screen.dart';
 
 class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
+  const ChatScreen({super.key, required this.userRole});
+  final String userRole;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +59,9 @@ class ChatScreen extends StatelessWidget {
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {
                 // Navigate to chat details screen
-                Get.to(ChatDetailScreen(userName: user['name']!));
+                Get.to(
+                  ChatDetailScreen(userName: user['name']!, userRole: userRole),
+                );
                 // Navigator.push(
                 //   context,
                 //   MaterialPageRoute(
