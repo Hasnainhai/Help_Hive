@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:helpers_hive/screen/bottom_navigation/bottom_navigation.dart';
 import 'package:helpers_hive/utils/colors.dart';
 
+import '../../utils/routes.dart';
+
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
@@ -34,8 +36,8 @@ class OnboardingScreen extends StatelessWidget {
                     height: 55,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Get.toNamed(AppRoutes.signup);
-                        Get.to(() => BottomNavScreen(userRole: 'helpSeeker'));
+                        Get.toNamed(AppRoutes.signup);
+                        // Get.to(() => BottomNavScreen(userRole: 'helpSeeker'));
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryBg,
