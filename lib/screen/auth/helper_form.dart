@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:helpers_hive/screen/complete_profile/job_selection_helper.dart';
-import 'package:helpers_hive/screen/complete_profile/personal_info_helper_screen.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import '../../utils/colors.dart';
@@ -22,9 +21,12 @@ class HelperForm extends StatefulWidget {
 class HelperFormState extends State<HelperForm> {
   final helperController = Get.put(HelperController());
   bool agree = false;
-  final TextEditingController helperFirstNameController = TextEditingController();
-  final TextEditingController helperMiddleNameController = TextEditingController();
-  final TextEditingController helperLastNameController = TextEditingController();
+  final TextEditingController helperFirstNameController =
+      TextEditingController();
+  final TextEditingController helperMiddleNameController =
+      TextEditingController();
+  final TextEditingController helperLastNameController =
+      TextEditingController();
 
   void clearHelperFormField() {
     helperFirstNameController.clear();
@@ -44,7 +46,10 @@ class HelperFormState extends State<HelperForm> {
               errorText: helperController.firstNameError.value,
             ),
           ),
-          CustomTextField(label: "Middle Name", controller: helperMiddleNameController),
+          CustomTextField(
+            label: "Middle Name",
+            controller: helperMiddleNameController,
+          ),
           Obx(
             () => CustomTextField(
               label: "Last Name*",
@@ -55,37 +60,41 @@ class HelperFormState extends State<HelperForm> {
           NextButton(
             label: 'Next',
             onPressed: () {
-              bool isValid = true;
+              Get.to(() => BottomNavScreen(userRole: 'helper'));
+              // bool isValid = true;
 
-              if (helperFirstNameController.text.trim().isEmpty) {
-                helperController.firstNameError.value = 'First name is required';
-                isValid = false;
-              } else {
-                helperController.firstNameError.value = '';
-              }
+              // if (helperFirstNameController.text.trim().isEmpty) {
+              //   helperController.firstNameError.value = 'First name is required';
+              //   isValid = false;
+              // } else {
+              //   helperController.firstNameError.value = '';
+              // }
 
-              if (helperLastNameController.text.trim().isEmpty) {
-                helperController.lastNameError.value = 'Last name is required';
-                isValid = false;
-              } else {
-                helperController.lastNameError.value = '';
-              }
+              // if (helperLastNameController.text.trim().isEmpty) {
+              //   helperController.lastNameError.value = 'Last name is required';
+              //   isValid = false;
+              // } else {
+              //   helperController.lastNameError.value = '';
+              // }
 
-              if (isValid) {
-                helperController.firstName.value = helperFirstNameController.text.trim();
-                helperController.middleName.value = helperMiddleNameController.text.trim();
-                helperController.lastName.value = helperLastNameController.text.trim();
+              // if (isValid) {
+              //   helperController.firstName.value = helperFirstNameController.text.trim();
+              //   helperController.middleName.value = helperMiddleNameController.text.trim();
+              //   helperController.lastName.value = helperLastNameController.text.trim();
 
-                if (widget.tabController.index == 0) {
-                  Get.toNamed('/infoSeeker');
-                } else {
-                  Get.to(PersonalInfoScreen());
-                }
-              }
+              //   if (widget.tabController.index == 0) {
+              //     Get.toNamed('/infoSeeker');
+              //   } else {
+              //     Get.to(PersonalInfoScreen());
+              //   }
+              // }
             },
           ),
           SizedBox(height: 32),
-          const Text('Or Continue With', style: TextStyle(fontSize: 16, color: Colors.grey)),
+          const Text(
+            'Or Continue With',
+            style: TextStyle(fontSize: 16, color: Colors.grey),
+          ),
           SizedBox(height: 32),
           Container(
             width: double.infinity,
@@ -105,7 +114,12 @@ class HelperFormState extends State<HelperForm> {
                     print('The data of the user is : ${user.displayName}');
                     // You can store the data in Firestore or move to another screen
                     print("Google Sign-In successful: ${user.email}");
-                    Get.to(JobSelection(displayName: user.displayName, googleEmail: user.email));
+                    Get.to(
+                      JobSelection(
+                        displayName: user.displayName,
+                        googleEmail: user.email,
+                      ),
+                    );
                   }
                 },
               ),
@@ -126,25 +140,37 @@ class HelperFormState extends State<HelperForm> {
                 text: 'Sign-up With Apple',
                 onPressed: () async {
                   try {
-                    final credential = await SignInWithApple.getAppleIDCredential(
-                      scopes: [AppleIDAuthorizationScopes.email, AppleIDAuthorizationScopes.fullName],
-                    );
+                    final credential =
+                        await SignInWithApple.getAppleIDCredential(
+                          scopes: [
+                            AppleIDAuthorizationScopes.email,
+                            AppleIDAuthorizationScopes.fullName,
+                          ],
+                        );
 
-                    final displayName = '${credential.givenName ?? ''} ${credential.familyName ?? ''}'.trim();
-                    final email = credential.email ?? 'hidden@apple.com'; // Apple sometimes hides it
+                    final displayName =
+                        '${credential.givenName ?? ''} ${credential.familyName ?? ''}'
+                            .trim();
+                    final email =
+                        credential.email ??
+                        'hidden@apple.com'; // Apple sometimes hides it
 
                     print('Apple Sign-in success: $displayName, $email');
 
                     await helperController.saveHelpSeekerProfile(
                       role: 'seeker',
-                      displayName: displayName.isNotEmpty ? displayName : 'Apple User',
+                      displayName:
+                          displayName.isNotEmpty ? displayName : 'Apple User',
                       googleEmail: email,
                     );
 
                     Get.to(BottomNavScreen(userRole: 'helper'));
                   } catch (e) {
                     print('Apple sign-in failed: $e');
-                    Get.snackbar('Sign-In Failed', 'Apple Sign-In was not successful');
+                    Get.snackbar(
+                      'Sign-In Failed',
+                      'Apple Sign-In was not successful',
+                    );
                   }
                 },
               ),
@@ -161,7 +187,11 @@ class HelperFormState extends State<HelperForm> {
                 },
                 child: const Text(
                   "Sign In",
-                  style: TextStyle(decoration: TextDecoration.underline, color: primaryBg, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    color: primaryBg,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
