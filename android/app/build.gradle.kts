@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.helpers_hive"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 35
     ndkVersion = "27.0.12077973"
 
     compileOptions {
@@ -22,9 +22,9 @@ android {
     defaultConfig {
         applicationId = "com.example.helpers_hive"
         minSdk = 23
-        targetSdk = flutter.targetSdkVersion
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
+        targetSdk = 35
+        versionCode = 1
+        versionName = "1.0"
     }
 
     buildTypes {
