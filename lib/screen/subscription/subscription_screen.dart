@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import '../../controller/subscription/payment_controller.dart';
 import '../../controller/subscription/subscription_controller.dart';
 import '../../utils/colors.dart';
 import '../../utils/widgets/next_button.dart';
@@ -14,6 +14,26 @@ class SubscriptionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(SubscriptionController());
     final bool isHelper = userRole == 'helper';
+    final PaymentController paymentController = Get.put(PaymentController());
+
+    // Function to get selected amount
+    double getSelectedAmount() {
+      if (isHelper) {
+        // Both helper options are $10
+        return 10.0;
+      } else {
+        switch (controller.selectedOption.value) {
+          case 0: // Monthly
+            return 200.0;
+          case 1: // Quarterly
+            return 600.0;
+          case 2: // Yearly
+            return 1200.0;
+          default:
+            return 0.0;
+        }
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -204,10 +224,35 @@ class SubscriptionScreen extends StatelessWidget {
               const SizedBox(height: 32),
 
               // Subscribe button
-              NextButton(
-                label: 'Subscribe Now',
-                onPressed: () => controller.subscribe(userRole),
-              ),
+              Obx(() {
+                // Check if a valid selection is made
+                bool isValidSelection = controller.selectedOption.value != -1;
+
+                // For helper, also check if profile/category is selected
+                if (isHelper) {
+                  if (controller.selectedOption.value == 0) {
+                    isValidSelection =
+                        controller.selectedProfileIndex!.value != null;
+                  } else if (controller.selectedOption.value == 1) {
+                    isValidSelection =
+                        controller.selectedCategoryIndex!.value != null;
+                  }
+                }
+                return NextButton(
+                  label: 'Subscribe Now',
+                  onPressed:
+                      isValidSelection
+                          ? () {
+                            final amount = getSelectedAmount();
+                            paymentController.makePayment(
+                              context: context,
+                              email: 'testing@gmail.com',
+                              amountInNaira: amount.toInt(),
+                            );
+                          }
+                          : null,
+                );
+              }),
 
               const SizedBox(height: 16),
               const Center(
