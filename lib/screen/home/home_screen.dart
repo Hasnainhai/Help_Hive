@@ -10,17 +10,31 @@ import 'package:helpers_hive/utils/colors.dart';
 import 'package:helpers_hive/screen/auth/signin_screen.dart';
 import 'package:helpers_hive/screen/menuscreens/settings_screen.dart';
 import 'package:helpers_hive/screen/menuscreens/support_chat/support_chat_screen.dart';
+import '../../controller/helper/job_controller.dart';
 import '../../models/help_seeker_profile_model.dart';
 import '../menuscreens/helperApplications/helper_applications_screen.dart';
 import 'job_detail_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final String userRole;
-  const HomeScreen({super.key, required this.userRole});
+  HomeScreen({super.key, required this.userRole});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final JobController jobController = Get.put(JobController());
+
+  @override
+  void initState() {
+    super.initState();
+    jobController.initializeBookmarks(5);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final isHelper = userRole == 'helper';
+    final isHelper = widget.userRole == 'helper';
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -91,19 +105,19 @@ class HomeScreen extends StatelessWidget {
         Get.to(() => JobPost());
         break;
       case 'Subscriptions':
-        Get.to(() => SubscriptionScreen(userRole: userRole));
+        Get.to(() => SubscriptionScreen(userRole: widget.userRole));
         break;
       case 'Applications Status':
-        Get.to(() => ApplicationsScreen(userRole: userRole));
+        Get.to(() => ApplicationsScreen(userRole: widget.userRole));
         break;
       case 'Notifications':
-        Get.to(() => NotificationsScreen(userRole: userRole));
+        Get.to(() => NotificationsScreen(userRole: widget.userRole));
         break;
       case 'Chat for Help':
         Get.to(() => SupportChatScreen());
         break;
       case 'Settings':
-        Get.to(() => SettingsScreen(userRole: userRole));
+        Get.to(() => SettingsScreen(userRole: widget.userRole));
         break;
       case 'My Applications':
         Get.to(() => HelperApplicationsScreen());
@@ -217,47 +231,53 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildFeaturedJobCard(int index) {
-    return Container(
-      width: 200,
-      margin: const EdgeInsets.only(right: 12),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [primaryBg, Color(0xFF6A89CC)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade400,
-            blurRadius: 6,
-            offset: const Offset(0, 3),
+    return GestureDetector(
+      onTap: () => Get.to(() => JobDetailsScreen(jobIndex: index)),
+      child: Container(
+        width: 200,
+        margin: const EdgeInsets.only(right: 12),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [primaryBg, Color(0xFF6A89CC)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-        ],
-      ),
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Housekeeper ${index + 1}',
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.shade400,
+              blurRadius: 6,
+              offset: const Offset(0, 3),
             ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Doha, Qatar',
-            style: TextStyle(color: Colors.white70, fontSize: 14),
-          ),
-          const Spacer(),
-          const Text(
-            'QAR 3,000/mo',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-        ],
+          ],
+        ),
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Housekeeper ${index + 1}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Doha, Qatar',
+              style: TextStyle(color: Colors.white70, fontSize: 14),
+            ),
+            const Spacer(),
+            const Text(
+              'QAR 3,000/mo',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -295,7 +315,22 @@ class HomeScreen extends StatelessWidget {
                       color: Colors.black87,
                     ),
                   ),
-                  Icon(Icons.bookmark_border, color: Colors.grey.shade600),
+                  GestureDetector(
+                    onTap: () {
+                      jobController.toggleBookmark(index);
+                    },
+                    child: Obx(
+                      () => Icon(
+                        jobController.bookmarks[index]
+                            ? Icons.bookmark
+                            : Icons.bookmark_border,
+                        color:
+                            jobController.bookmarks[index]
+                                ? primaryBg
+                                : Colors.grey.shade600,
+                      ),
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 12),
@@ -521,21 +556,11 @@ class HomeScreen extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder:
-            (context) =>
-                HelpSeekerDetailsScreen(profile: profile, userRole: userRole),
+            (context) => HelpSeekerDetailsScreen(
+              profile: profile,
+              userRole: widget.userRole,
+            ),
       ),
     );
   }
-
-  // void _showSubscriptionDialog(BuildContext context) {
-  //   showDialog(
-  //     context: context,
-  //     builder:
-  //         (_) => AlertDialog(
-  //           title: const Text('Subscription Required'),
-  //           content: const Text('QAR 10 for viewing a helper\'s profile'),
-  //           actions: [NextButton(label: 'Subscribe', onPressed: () {})],
-  //         ),
-  //   );
-  // }
 }

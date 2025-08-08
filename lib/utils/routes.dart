@@ -8,7 +8,6 @@ import 'package:helpers_hive/screen/complete_profile/personal_helper_screen.dart
 import 'package:helpers_hive/screen/home/home_screen.dart';
 import 'package:helpers_hive/screen/onboarding/onboarding_screen.dart';
 
-import '../screen/application/applications_screen.dart';
 import '../screen/auth/signin_screen.dart';
 import '../screen/bottom_navigation/bottom_navigation.dart';
 import '../screen/splash/splash_screen.dart';

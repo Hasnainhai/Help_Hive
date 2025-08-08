@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:helpers_hive/screen/auth/controller/helper_controller.dart';
@@ -9,9 +8,6 @@ import 'package:helpers_hive/utils/widgets/custom_text_field.dart';
 import 'package:helpers_hive/utils/widgets/next_button.dart';
 import 'package:helpers_hive/utils/widgets/phone_field.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
-import '../../utils/colors.dart';
-import 'controller/profile_controller.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
   const PersonalInfoScreen({super.key});
@@ -25,16 +21,17 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
-
-  File? _pickedImage;
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   final ImagePicker _picker = ImagePicker();
 
   Future<void> _pickImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      helperController.pickedImage.value = File(pickedFile.path); // 👈 Set in controller
+      helperController.pickedImage.value = File(
+        pickedFile.path,
+      ); // 👈 Set in controller
     }
   }
 
@@ -59,13 +56,20 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                       child: CircleAvatar(
                         radius: 25,
                         backgroundColor: Colors.grey[200],
-                        child: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 18),
+                        child: const Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.black,
+                          size: 18,
+                        ),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Text("Complete Your Profile", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600)),
+                const Text(
+                  "Complete Your Profile",
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+                ),
                 const Text(
                   'Rest assured, your personal data is visible only to you. No one else will have access to it.',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
@@ -80,8 +84,11 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                           radius: 50,
                           backgroundImage:
                               helperController.pickedImage.value != null
-                                  ? FileImage(helperController.pickedImage.value!)
-                                  : const AssetImage('assets/images/logo.png') as ImageProvider,
+                                  ? FileImage(
+                                    helperController.pickedImage.value!,
+                                  )
+                                  : const AssetImage('assets/images/logo.png')
+                                      as ImageProvider,
                         ),
                         Positioned(
                           bottom: 0,
@@ -91,7 +98,11 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                             child: CircleAvatar(
                               radius: 18,
                               backgroundColor: Colors.grey[300],
-                              child: const Icon(Icons.edit, size: 18, color: Colors.black),
+                              child: const Icon(
+                                Icons.edit,
+                                size: 18,
+                                color: Colors.black,
+                              ),
                             ),
                           ),
                         ),
@@ -104,14 +115,20 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                   () => CustomTextField(
                     label: 'Email*',
                     controller: _emailController,
-                    errorText: helperController.emailError.value.isNotEmpty ? helperController.emailError.value : null,
+                    errorText:
+                        helperController.emailError.value.isNotEmpty
+                            ? helperController.emailError.value
+                            : null,
                   ),
                 ),
                 Obx(
                   () => CustomTextField(
                     label: 'Password',
                     controller: _passwordController,
-                    errorText: helperController.passwordError.value.isNotEmpty ? helperController.passwordError.value : null,
+                    errorText:
+                        helperController.passwordError.value.isNotEmpty
+                            ? helperController.passwordError.value
+                            : null,
                   ),
                 ),
                 Obx(
@@ -129,7 +146,10 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                   () => PhoneField(
                     label: 'Phone',
                     controller: _phoneController,
-                    errorText: helperController.phoneError.value.isNotEmpty ? helperController.phoneError.value : null,
+                    errorText:
+                        helperController.phoneError.value.isNotEmpty
+                            ? helperController.phoneError.value
+                            : null,
                   ),
                 ),
                 const SizedBox(height: 32), // 👈 Instead of Spacer
@@ -138,7 +158,8 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                   onPressed: () async {
                     final email = _emailController.text.trim();
                     final password = _passwordController.text.trim();
-                    final confirmPassword = _confirmPasswordController.text.trim();
+                    final confirmPassword =
+                        _confirmPasswordController.text.trim();
                     final phone = _phoneController.text.trim();
                     bool isValid = true;
                     if (email.isEmpty) {
@@ -148,34 +169,44 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                       helperController.emailError.value = '';
                     }
                     if (password.isEmpty) {
-                      helperController.passwordError.value = 'Please enter Password';
+                      helperController.passwordError.value =
+                          'Please enter Password';
                       isValid = false;
                     } else if (password.length < 6) {
-                      helperController.passwordError.value = 'Password must be at least 6 characters';
+                      helperController.passwordError.value =
+                          'Password must be at least 6 characters';
                       isValid = false;
                     } else {
                       helperController.passwordError.value = '';
                     }
                     if (confirmPassword.isEmpty) {
-                      helperController.confirmPasswordError.value = 'Please confirm Password';
+                      helperController.confirmPasswordError.value =
+                          'Please confirm Password';
                       isValid = false;
                     } else if (confirmPassword != password) {
-                      helperController.confirmPasswordError.value = 'Passwords do not match';
+                      helperController.confirmPasswordError.value =
+                          'Passwords do not match';
                       isValid = false;
                     } else {
                       helperController.confirmPasswordError.value = '';
                     }
                     if (phone.isEmpty || phone.length < 10) {
-                      helperController.phoneError.value = "Enter a valid phone number";
+                      helperController.phoneError.value =
+                          "Enter a valid phone number";
                     } else {
                       helperController.phoneError.value = '';
                     }
                     if (!isValid) return;
                     final querySnapshot =
-                        await helperController.firestore.collection('users').where('email', isEqualTo: email).limit(1).get();
+                        await helperController.firestore
+                            .collection('users')
+                            .where('email', isEqualTo: email)
+                            .limit(1)
+                            .get();
 
                     if (querySnapshot.docs.isNotEmpty) {
-                      helperController.emailError.value = 'An account already exists for this email';
+                      helperController.emailError.value =
+                          'An account already exists for this email';
                       return;
                     }
                     helperController.email.value = email;
