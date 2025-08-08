@@ -203,40 +203,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const SizedBox(height: 24),
           ],
 
-          // Support Section
-          _buildSectionHeader("Support"),
-          _buildSettingsCard(
-            children: [
-              _buildListTile(
-                icon: Icons.help_outline,
-                title: "Help Center",
-                subtitle: "FAQs and guides",
-                onTap: () => _openHelpCenter(),
-              ),
-              const Divider(height: 1),
-              _buildListTile(
-                icon: Icons.description_outlined,
-                title: "Terms & Conditions",
-                subtitle: "Legal agreements",
-                onTap: () => _openTerms(),
-              ),
-              const Divider(height: 1),
-              _buildListTile(
-                icon: Icons.privacy_tip_outlined,
-                title: "Privacy Policy",
-                subtitle: "How we protect your data",
-                onTap: () => _openPrivacyPolicy(),
-              ),
-              const Divider(height: 1),
-              _buildListTile(
-                icon: Icons.contact_support_outlined,
-                title: "Contact Support",
-                subtitle: "Get help from our team",
-                onTap: () => _contactSupport(),
-              ),
-            ],
-          ),
-
           const SizedBox(height: 24),
 
           // Account Actions

@@ -58,24 +58,24 @@ class _HelpSeekerFormState extends State<HelpSeekerForm> {
           NextButton(
             label: 'Next',
             onPressed: () {
-              Get.to(() => BottomNavScreen(userRole: 'helpSeeker'));
-              // if (helpSeekerController.validateBasicInfo(
-              //   helperFirstNameController.text,
-              //   helperLastNameController.text,
-              // )) {
-              //   helpSeekerController.firstName.value =
-              //       helperFirstNameController.text;
-              //   helpSeekerController.middleName.value =
-              //       helperMiddleNameController.text;
-              //   helpSeekerController.lastName.value =
-              //       helperLastNameController.text;
+              // Get.to(() => BottomNavScreen(userRole: 'helpSeeker'));
+              if (helpSeekerController.validateBasicInfo(
+                helperFirstNameController.text,
+                helperLastNameController.text,
+              )) {
+                helpSeekerController.firstName.value =
+                    helperFirstNameController.text;
+                helpSeekerController.middleName.value =
+                    helperMiddleNameController.text;
+                helpSeekerController.lastName.value =
+                    helperLastNameController.text;
 
-              //   if (widget.tabController.index == 0) {
-              //     Get.toNamed('/seekerPrimaryInfo');
-              //   } else {
-              //     Get.toNamed('/personalInfo');
-              //   }
-              // }
+                if (widget.tabController.index == 0) {
+                  Get.toNamed('/seekerPrimaryInfo');
+                } else {
+                  Get.toNamed('/personalInfo');
+                }
+              }
             },
           ),
           SizedBox(height: 32),

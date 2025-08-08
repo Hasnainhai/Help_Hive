@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:helpers_hive/screen/bottom_navigation/bottom_navigation.dart';
 import 'package:helpers_hive/utils/colors.dart';
-
 import '../../utils/routes.dart';
 
 class OnboardingScreen extends StatelessWidget {

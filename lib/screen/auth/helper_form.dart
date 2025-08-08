@@ -7,6 +7,7 @@ import '../../utils/colors.dart';
 import '../../utils/widgets/custom_text_field.dart';
 import '../../utils/widgets/next_button.dart';
 import '../bottom_navigation/bottom_navigation.dart';
+import '../complete_profile/personal_info_helper_screen.dart';
 import 'auth_service.dart';
 import 'controller/helper_controller.dart';
 
@@ -60,34 +61,38 @@ class HelperFormState extends State<HelperForm> {
           NextButton(
             label: 'Next',
             onPressed: () {
-              Get.to(() => BottomNavScreen(userRole: 'helper'));
-              // bool isValid = true;
+              // Get.to(() => BottomNavScreen(userRole: 'helper'));
+              bool isValid = true;
 
-              // if (helperFirstNameController.text.trim().isEmpty) {
-              //   helperController.firstNameError.value = 'First name is required';
-              //   isValid = false;
-              // } else {
-              //   helperController.firstNameError.value = '';
-              // }
+              if (helperFirstNameController.text.trim().isEmpty) {
+                helperController.firstNameError.value =
+                    'First name is required';
+                isValid = false;
+              } else {
+                helperController.firstNameError.value = '';
+              }
 
-              // if (helperLastNameController.text.trim().isEmpty) {
-              //   helperController.lastNameError.value = 'Last name is required';
-              //   isValid = false;
-              // } else {
-              //   helperController.lastNameError.value = '';
-              // }
+              if (helperLastNameController.text.trim().isEmpty) {
+                helperController.lastNameError.value = 'Last name is required';
+                isValid = false;
+              } else {
+                helperController.lastNameError.value = '';
+              }
 
-              // if (isValid) {
-              //   helperController.firstName.value = helperFirstNameController.text.trim();
-              //   helperController.middleName.value = helperMiddleNameController.text.trim();
-              //   helperController.lastName.value = helperLastNameController.text.trim();
+              if (isValid) {
+                helperController.firstName.value =
+                    helperFirstNameController.text.trim();
+                helperController.middleName.value =
+                    helperMiddleNameController.text.trim();
+                helperController.lastName.value =
+                    helperLastNameController.text.trim();
 
-              //   if (widget.tabController.index == 0) {
-              //     Get.toNamed('/infoSeeker');
-              //   } else {
-              //     Get.to(PersonalInfoScreen());
-              //   }
-              // }
+                if (widget.tabController.index == 0) {
+                  Get.toNamed('/infoSeeker');
+                } else {
+                  Get.to(PersonalInfoScreen());
+                }
+              }
             },
           ),
           SizedBox(height: 32),

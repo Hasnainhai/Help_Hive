@@ -42,8 +42,7 @@ class ChatScreenState extends State<SupportChatWidget> {
         child: Container(
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
-            color:
-                message.isSender ? Colors.greenAccent : Colors.deepPurpleAccent,
+            color: message.isSender ? primaryBg : Colors.deepPurpleAccent,
             borderRadius: BorderRadius.circular(12.0),
           ),
           child: Text(

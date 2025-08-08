@@ -5,19 +5,20 @@ import 'package:helpers_hive/utils/widgets/next_button.dart';
 import '../../utils/colors.dart';
 import '../../utils/widgets/brief_description.dart';
 import '../../utils/widgets/custom_linear_indicator.dart';
-import 'controller/profile_controller.dart';
 
 class PersonalScreen extends StatelessWidget {
-  HelperController helperController = Get.put(HelperController());
   PersonalScreen({super.key});
 
-  final TextEditingController briefDescriptionController = TextEditingController();
+  final TextEditingController briefDescriptionController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    HelperController helperController = Get.put(HelperController());
     return Scaffold(
       backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: true, // 👈 Important for keyboard to push content
+      resizeToAvoidBottomInset:
+          true, // 👈 Important for keyboard to push content
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -35,13 +36,20 @@ class PersonalScreen extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 25,
                         backgroundColor: Colors.grey[200],
-                        child: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 18),
+                        child: const Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.black,
+                          size: 18,
+                        ),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Text("Complete Your Profile", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600)),
+                const Text(
+                  "Complete Your Profile",
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+                ),
                 const Text(
                   'Rest assured, your personal data is visible only to you. No one else will have access to it.',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
@@ -54,7 +62,9 @@ class PersonalScreen extends StatelessWidget {
                     label: 'Brief Description (about yourself)',
                     controller: briefDescriptionController,
                     errorText:
-                        helperController.descriptionError.value.isNotEmpty ? helperController.descriptionError.value : null,
+                        helperController.descriptionError.value.isNotEmpty
+                            ? helperController.descriptionError.value
+                            : null,
                   ),
                 ),
                 const SizedBox(height: 32),
@@ -64,21 +74,24 @@ class PersonalScreen extends StatelessWidget {
                     bool isValid = true;
 
                     if (helperController.selectedGender.value.isEmpty) {
-                      helperController.genderError.value = 'Please select a gender';
+                      helperController.genderError.value =
+                          'Please select a gender';
                       isValid = false;
                     } else {
                       helperController.genderError.value = '';
                     }
 
                     if (briefDescriptionController.text.trim().isEmpty) {
-                      helperController.descriptionError.value = 'Description is required';
+                      helperController.descriptionError.value =
+                          'Description is required';
                       isValid = false;
                     } else {
                       helperController.descriptionError.value = '';
                     }
 
                     if (isValid) {
-                      helperController.briefDescription.value = briefDescriptionController.text.trim();
+                      helperController.briefDescription.value =
+                          briefDescriptionController.text.trim();
                       Get.toNamed('/jobSelection');
                     }
                   },
@@ -101,11 +114,17 @@ Widget _buildGenderSelection() {
       () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Gender*", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+          const Text(
+            "Gender*",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          ),
           if (helperController.genderError.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(top: 4.0),
-              child: Text(helperController.genderError.value, style: TextStyle(color: Colors.red, fontSize: 12)),
+              child: Text(
+                helperController.genderError.value,
+                style: TextStyle(color: Colors.red, fontSize: 12),
+              ),
             ),
           const SizedBox(height: 10),
           Row(
@@ -117,7 +136,9 @@ Widget _buildGenderSelection() {
                     activeColor: primaryBg,
                     value: 'Male',
                     groupValue: helperController.selectedGender.value,
-                    onChanged: (value) => helperController.selectedGender.value = value!,
+                    onChanged:
+                        (value) =>
+                            helperController.selectedGender.value = value!,
                   ),
                   const Text("Male"),
                 ],
@@ -128,7 +149,9 @@ Widget _buildGenderSelection() {
                     activeColor: primaryBg,
                     value: 'Female',
                     groupValue: helperController.selectedGender.value,
-                    onChanged: (value) => helperController.selectedGender.value = value!,
+                    onChanged:
+                        (value) =>
+                            helperController.selectedGender.value = value!,
                   ),
                   const Text("Female"),
                 ],
