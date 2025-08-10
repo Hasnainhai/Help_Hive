@@ -199,7 +199,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                     if (!isValid) return;
                     final querySnapshot =
                         await helperController.firestore
-                            .collection('users')
+                            .collection('helper')
                             .where('email', isEqualTo: email)
                             .limit(1)
                             .get();

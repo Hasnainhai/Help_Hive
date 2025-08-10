@@ -27,7 +27,14 @@ class HelpSeekerController extends GetxController {
   final zipCodeError = ''.obs;
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final List<String> countries = ['Saudi Arabia', 'Bahrain', 'Kuwait', 'Oman', 'Qatar', 'Iraq'];
+  final List<String> countries = [
+    'Saudi Arabia',
+    'Bahrain',
+    'Kuwait',
+    'Oman',
+    'Qatar',
+    'Iraq',
+  ];
 
   bool validateBasicInfo(String firstNameInput, String lastNameInput) {
     bool isValid = true;
@@ -63,12 +70,16 @@ class HelpSeekerController extends GetxController {
     zipCode.value = '';
   }
 
-  Future<void> saveHelpSeekerProfile({required String role, String? displayName, String? googleEmail}) async {
+  Future<void> saveHelpSeekerProfile({
+    required String role,
+    String? displayName,
+    String? googleEmail,
+  }) async {
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid == null) return;
 
     try {
-      await FirebaseFirestore.instance.collection('users').doc(uid).set({
+      await FirebaseFirestore.instance.collection('helpSeeker').doc(uid).set({
         'firstName': firstName.value,
         'middleName': middleName.value,
         'lastName': lastName.value,
@@ -90,10 +101,8 @@ class HelpSeekerController extends GetxController {
 
   Future<void> registerUser(String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
       // Successfully created user
       final uid = userCredential.user?.uid;
       print("User created with UID: $uid");

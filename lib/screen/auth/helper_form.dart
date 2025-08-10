@@ -162,8 +162,8 @@ class HelperFormState extends State<HelperForm> {
 
                     print('Apple Sign-in success: $displayName, $email');
 
-                    await helperController.saveHelpSeekerProfile(
-                      role: 'seeker',
+                    await helperController.saveHelperProfile(
+                      role: 'helper',
                       displayName:
                           displayName.isNotEmpty ? displayName : 'Apple User',
                       googleEmail: email,
