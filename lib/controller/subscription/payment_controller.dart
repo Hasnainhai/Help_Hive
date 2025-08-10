@@ -4,7 +4,7 @@ import 'package:pay_with_paystack/pay_with_paystack.dart';
 
 class PaymentController extends GetxController {
   // String paystackPublicKey = '';
-  String paystackSecretKey = '';
+  String paystackSecretKey = 'sk_test_88d2f72f79b5812cdc154b73c113ab5a3aca0ac6';
 
   void makePayment({
     required BuildContext context,

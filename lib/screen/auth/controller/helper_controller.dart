@@ -36,7 +36,11 @@ class HelperController extends GetxController {
     jobSelectionError.value = ''; // Clear error when user interacts
   }
 
-  Future<void> saveHelpSeekerProfile({required String role, String? displayName, String? googleEmail}) async {
+  Future<void> saveHelperProfile({
+    required String role,
+    String? displayName,
+    String? googleEmail,
+  }) async {
     print('saving info');
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid == null) return;
@@ -47,12 +51,14 @@ class HelperController extends GetxController {
       // Upload image if picked
       if (pickedImage.value != null) {
         final file = pickedImage.value!;
-        final ref = FirebaseStorage.instance.ref().child('profile_images/$uid.jpg');
+        final ref = FirebaseStorage.instance.ref().child(
+          'profile_images/$uid.jpg',
+        );
         await ref.putFile(file);
         imageUrl = await ref.getDownloadURL();
       }
       // Save user info to Firestore
-      await FirebaseFirestore.instance.collection('users').doc(uid).set({
+      await FirebaseFirestore.instance.collection('helper').doc(uid).set({
         'firstName': firstName.value,
         'middleName': middleName.value,
         'lastName': lastName.value,
@@ -73,10 +79,8 @@ class HelperController extends GetxController {
 
   Future<void> registerUser(String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
       // Successfully created user
       final uid = userCredential.user?.uid;
       print("User created with UID: $uid");

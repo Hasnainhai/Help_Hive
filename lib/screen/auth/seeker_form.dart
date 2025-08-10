@@ -103,7 +103,7 @@ class _HelpSeekerFormState extends State<HelpSeekerForm> {
                     // You can store the data in Firestore or move to another screen
                     print("Google Sign-In successful: ${user.email}");
                     await helpSeekerController.saveHelpSeekerProfile(
-                      role: 'seeker',
+                      role: 'helpSeeker',
                       displayName: user.displayName,
                       googleEmail: user.email,
                     );

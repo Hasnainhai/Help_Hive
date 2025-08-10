@@ -64,7 +64,7 @@ class JobSelection extends StatelessWidget {
                       helperController.email.value,
                       helperController.password.value,
                     );
-                    await helperController.saveHelpSeekerProfile(
+                    await helperController.saveHelperProfile(
                       role: 'helper',
                       displayName: displayName,
                       googleEmail: googleEmail,

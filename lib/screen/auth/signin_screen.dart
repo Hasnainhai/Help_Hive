@@ -38,22 +38,33 @@ class SignInScreen extends StatelessWidget {
       final uid = userCredential.user?.uid;
       if (uid == null) throw Exception('User ID not found');
 
-      final userDoc =
-          await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      // Check if the user exists in helper collection
+      final helperDoc =
+          await FirebaseFirestore.instance.collection('helper').doc(uid).get();
 
-      if (!userDoc.exists) {
+      // Check if the user exists in helpSeeker collection
+      final helpSeekerDoc =
+          await FirebaseFirestore.instance
+              .collection('helpSeeker')
+              .doc(uid)
+              .get();
+
+      if (helperDoc.exists) {
+        // Navigate to helper dashboard
+        Get.offAll(BottomNavScreen(userRole: 'helper'));
+      } else if (helpSeekerDoc.exists) {
+        // Navigate to helpSeeker dashboard
+        Get.offAll(BottomNavScreen(userRole: 'helpSeeker'));
+      } else {
+        // No matching account found
         Get.snackbar(
-          'Error',
-          'User data not found in database',
+          'Unauthorized',
+          'No account found for these credentials',
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
-        return;
+        await FirebaseAuth.instance.signOut();
       }
-
-      final role = userDoc['role'] ?? 'helpSeeker';
-
-      Get.offAll(BottomNavScreen(userRole: role));
     } on FirebaseAuthException catch (e) {
       Get.snackbar(
         'Sign-In Failed',
