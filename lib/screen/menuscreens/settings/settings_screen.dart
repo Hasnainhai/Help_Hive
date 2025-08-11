@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:helpers_hive/screen/menuscreens/settings/change_password_screen.dart';
+import 'package:helpers_hive/screen/menuscreens/settings/employement_history_screen.dart';
+import 'package:helpers_hive/screen/subscription/subscription_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key, required this.userRole});
@@ -94,13 +98,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           _buildSectionHeader("Account Settings"),
           _buildSettingsCard(
             children: [
-              _buildListTile(
-                icon: Icons.person_outline,
-                title: "Edit Profile",
-                subtitle: "Update your personal information",
-                onTap: () => _navigateToEditProfile(),
-              ),
-              const Divider(height: 1),
               if (isHelper) ...[
                 _buildListTile(
                   icon: Icons.work_outline,
@@ -322,44 +319,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   // Navigation and action methods
-  void _navigateToEditProfile() {
-    print("Navigate to Edit Profile");
-  }
 
   void _navigateToEmploymentHistory() {
-    print("Navigate to Employment History");
-  }
-
-  void _navigateToPaymentMethods() {
-    print("Navigate to Payment Methods");
+    Get.to(() => EmploymentHistoryScreen());
   }
 
   void _navigateToSubscription() {
-    print("Navigate to Subscription");
-  }
-
-  void _openHelpCenter() {
-    print("Open Help Center");
-  }
-
-  void _openTerms() {
-    print("Open Terms & Conditions");
-  }
-
-  void _openPrivacyPolicy() {
-    print("Open Privacy Policy");
-  }
-
-  void _contactSupport() {
-    print("Contact Support");
-  }
-
-  void _manageFamilyMembers() {
-    print("Manage Family Members");
+    Get.to(() => SubscriptionScreen(userRole: widget.userRole));
   }
 
   void _changePassword() {
-    print("Change Password");
+    Get.to(() => ChangePasswordScreen());
   }
 
   void _confirmLogout() {

@@ -8,7 +8,7 @@ import 'package:helpers_hive/screen/menuscreens/notifications/notifications_scre
 import 'package:helpers_hive/screen/subscription/subscription_screen.dart';
 import 'package:helpers_hive/utils/colors.dart';
 import 'package:helpers_hive/screen/auth/signin_screen.dart';
-import 'package:helpers_hive/screen/menuscreens/settings_screen.dart';
+import 'package:helpers_hive/screen/menuscreens/settings/settings_screen.dart';
 import 'package:helpers_hive/screen/menuscreens/support_chat/support_chat_screen.dart';
 import '../../controller/helper/job_controller.dart';
 import '../../models/help_seeker_profile_model.dart';
