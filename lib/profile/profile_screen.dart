@@ -440,42 +440,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
             const SizedBox(height: 10),
-            widget.userRole == 'helper'
-                ? Column(
-                  children: [
-                    const SizedBox(height: 20),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Upload CV',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          _cvFile != null
-                              ? _cvFile!.path.split('/').last
-                              : 'No file selected',
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        TextButton.icon(
-                          icon: Icon(Icons.upload_file, color: primaryBg),
-                          label: Text(
-                            'Choose File',
-                            style: TextStyle(color: primaryBg),
-                          ),
-                          onPressed: _pickCV,
-                        ),
-                      ],
-                    ),
-                  ],
-                )
-                : Container(),
+            // widget.userRole == 'helper'
+            //     ? Column(
+            //       children: [
+            //         const SizedBox(height: 20),
+            //         Align(
+            //           alignment: Alignment.centerLeft,
+            //           child: Text(
+            //             'Upload CV',
+            //             style: TextStyle(
+            //               fontSize: 18,
+            //               fontWeight: FontWeight.w600,
+            //             ),
+            //           ),
+            //         ),
+            //         Row(
+            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //           children: [
+            //             Text(
+            //               _cvFile != null
+            //                   ? _cvFile!.path.split('/').last
+            //                   : 'No file selected',
+            //               overflow: TextOverflow.ellipsis,
+            //             ),
+            //             TextButton.icon(
+            //               icon: Icon(Icons.upload_file, color: primaryBg),
+            //               label: Text(
+            //                 'Choose File',
+            //                 style: TextStyle(color: primaryBg),
+            //               ),
+            //               onPressed: _pickCV,
+            //             ),
+            //           ],
+            //         ),
+            //       ],
+            //     )
+            //     : Container(),
             const SizedBox(height: 20),
 
             NextButton(label: 'Update', onPressed: () {}),

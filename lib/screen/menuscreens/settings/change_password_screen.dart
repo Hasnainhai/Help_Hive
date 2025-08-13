@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:helpers_hive/utils/widgets/custom_text_field.dart';
 import 'package:helpers_hive/utils/widgets/next_button.dart';
 import '../../../controller/auth/change_password_controller.dart';
 
@@ -11,6 +12,7 @@ class ChangePasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text("Change Password"),
         backgroundColor: Colors.white,
@@ -20,24 +22,24 @@ class ChangePasswordScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(
+            CustomTextField(
+              label: 'Current Password',
               controller: controller.currentPasswordController,
-              obscureText: true,
-              decoration: const InputDecoration(labelText: "Current Password"),
+              isPassword: true,
             ),
+
             const SizedBox(height: 12),
-            TextField(
+            CustomTextField(
+              label: 'New Password',
               controller: controller.newPasswordController,
-              obscureText: true,
-              decoration: const InputDecoration(labelText: "New Password"),
+              isPassword: true,
             ),
+
             const SizedBox(height: 12),
-            TextField(
+            CustomTextField(
+              label: 'Confirm New Password',
               controller: controller.confirmPasswordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                labelText: "Confirm New Password",
-              ),
+              isPassword: true,
             ),
             const SizedBox(height: 40),
             Obx(

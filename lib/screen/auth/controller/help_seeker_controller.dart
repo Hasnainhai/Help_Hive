@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HelpSeekerController extends GetxController {
   final firstName = ''.obs;
@@ -25,6 +30,16 @@ class HelpSeekerController extends GetxController {
   final websiteError = ''.obs;
   final addressError = ''.obs;
   final zipCodeError = ''.obs;
+  // pass and if files
+  final passportFile = Rx<File?>(null);
+  final idFile = Rx<File?>(null);
+  final passportUrl = ''.obs;
+  final idUrl = ''.obs;
+  final isUploadingPassport = false.obs;
+  final isUploadingId = false.obs;
+  final passportError = ''.obs;
+  final idError = ''.obs;
+
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final List<String> countries = [
@@ -68,6 +83,89 @@ class HelpSeekerController extends GetxController {
     website.value = '';
     address.value = '';
     zipCode.value = '';
+    passportFile.value = null;
+    idFile.value = null;
+    passportUrl.value = '';
+    idUrl.value = '';
+  }
+
+  // upload passport and id files
+  Future<void> pickPassport() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        passportFile.value = File(image.path);
+        passportError.value = '';
+      }
+    } catch (e) {
+      passportError.value = 'Failed to pick passport image';
+    }
+  }
+
+  Future<void> pickId() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        idFile.value = File(image.path);
+        idError.value = '';
+      }
+    } catch (e) {
+      idError.value = 'Failed to pick ID image';
+    }
+  }
+
+  Future<String> uploadFile(File file, String path) async {
+    try {
+      final bytes = await file.readAsBytes();
+      final ref = FirebaseStorage.instance.ref().child(path);
+      final uploadTask = ref.putData(bytes);
+      final snapshot = await uploadTask;
+      return await snapshot.ref.getDownloadURL();
+    } catch (e) {
+      throw 'Upload failed: ${e.toString()}';
+    }
+  }
+
+  Future<void> uploadPassport() async {
+    if (passportFile.value == null) {
+      passportError.value = 'Please select a passport file';
+      return;
+    }
+
+    try {
+      isUploadingPassport.value = true;
+      final uid = auth.currentUser?.uid ?? 'unknown';
+      passportUrl.value = await uploadFile(
+        passportFile.value!,
+        'helpSeekers/$uid/passport_${DateTime.now().millisecondsSinceEpoch}',
+      );
+      passportError.value = '';
+    } catch (e) {
+      passportError.value = e.toString();
+    } finally {
+      isUploadingPassport.value = false;
+    }
+  }
+
+  Future<void> uploadId() async {
+    if (idFile.value == null) {
+      idError.value = 'Please select an ID file';
+      return;
+    }
+
+    try {
+      isUploadingId.value = true;
+      final uid = auth.currentUser?.uid ?? 'unknown';
+      idUrl.value = await uploadFile(
+        idFile.value!,
+        'helpSeekers/$uid/id_${DateTime.now().millisecondsSinceEpoch}',
+      );
+      idError.value = '';
+    } catch (e) {
+      idError.value = e.toString();
+    } finally {
+      isUploadingId.value = false;
+    }
   }
 
   Future<void> saveHelpSeekerProfile({
@@ -78,8 +176,20 @@ class HelpSeekerController extends GetxController {
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid == null) return;
 
+    // Verify both documents are uploaded
+    if (passportUrl.isEmpty || idUrl.isEmpty) {
+      Get.snackbar(
+        'Error',
+        'Please upload both passport and ID documents',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return;
+    }
+
     try {
-      await FirebaseFirestore.instance.collection('helpSeeker').doc(uid).set({
+      await firestore.collection('helpSeeker').doc(uid).set({
         'firstName': firstName.value,
         'middleName': middleName.value,
         'lastName': lastName.value,
@@ -92,10 +202,14 @@ class HelpSeekerController extends GetxController {
         'address': address.value,
         'zipCode': zipCode.value,
         'role': role,
+        'passportUrl': passportUrl.value,
+        'idUrl': idUrl.value,
         'createdAt': FieldValue.serverTimestamp(),
-      });
+        'updatedAt': FieldValue.serverTimestamp(),
+      }, SetOptions(merge: true));
     } catch (e) {
       print('Error saving help seeker profile: $e');
+      rethrow;
     }
   }
 
