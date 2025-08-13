@@ -8,6 +8,7 @@ import 'package:helpers_hive/utils/widgets/custom_text_field.dart';
 import 'package:helpers_hive/utils/widgets/next_button.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import '../../utils/colors.dart';
+import 'forget_password_screen.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
@@ -262,7 +263,13 @@ class SignInScreen extends StatelessWidget {
           const SizedBox(height: 8),
           Align(
             alignment: Alignment.centerRight,
-            child: Text('Forgot Password?', style: TextStyle(color: primaryBg)),
+            child: GestureDetector(
+              onTap: () => Get.to(ForgotPasswordScreen()),
+              child: Text(
+                'Forgot Password?',
+                style: TextStyle(color: primaryBg),
+              ),
+            ),
           ),
           const SizedBox(height: 8),
           isLoading.value
