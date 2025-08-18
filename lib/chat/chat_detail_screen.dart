@@ -21,6 +21,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
   final TextEditingController _controller = TextEditingController();
   bool _isHiringInProgress = false;
   bool _isHired = false;
+  // bool _isRequestPending = false;
 
   void _sendMessage() {
     final text = _controller.text.trim();
@@ -141,7 +142,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
               ),
             ),
 
-          if (_isHired)
+          if (_isHired && isHelpSeeker)
             Container(
               padding: const EdgeInsets.symmetric(vertical: 8),
               color: Colors.green.shade100,
@@ -195,6 +196,38 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
               ),
             ),
 
+          // Helper Side - Pending Request
+          if (widget.userRole == 'helper')
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              color: Colors.orange.shade50,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: _showAcceptDialog,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryBg,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                      ),
+                      icon: const Icon(Icons.hourglass_empty),
+                      label: const Text(
+                        "Pending Request",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
           // Message Input
           Padding(
             padding: const EdgeInsets.all(12),
@@ -224,6 +257,38 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  void _showAcceptDialog() {
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: const Text("Accept Hiring Request"),
+            content: const Text("Do you want to accept this hiring request?"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("Reject"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  setState(() {
+                    // _isRequestPending = false;
+                    _isHired = true;
+                  });
+                  messages.add("You have accepted the hiring request.");
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  foregroundColor: Colors.white,
+                ),
+                child: const Text("Accept"),
+              ),
+            ],
+          ),
     );
   }
 }
