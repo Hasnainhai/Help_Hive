@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:helpers_hive/utils/colors.dart';
 
 class HelperApplicationsController extends GetxController {
   RxString currentFilter = 'All'.obs;

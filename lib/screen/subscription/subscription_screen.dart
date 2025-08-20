@@ -231,11 +231,9 @@ class SubscriptionScreen extends StatelessWidget {
                 // For helper, also check if profile/category is selected
                 if (isHelper) {
                   if (controller.selectedOption.value == 0) {
-                    isValidSelection =
-                        controller.selectedProfileIndex!.value != null;
+                    isValidSelection = true;
                   } else if (controller.selectedOption.value == 1) {
-                    isValidSelection =
-                        controller.selectedCategoryIndex!.value != null;
+                    isValidSelection = true;
                   }
                 }
                 return NextButton(

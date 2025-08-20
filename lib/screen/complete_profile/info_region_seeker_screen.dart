@@ -226,7 +226,7 @@ class InfoRegionSeekerScreen extends StatelessWidget {
                           onPressed: () async {
                             // Validation
                             bool isValid = true;
-                            bool documentsUploaded = true;
+                            // bool documentsUploaded = true;
 
                             // Country validation
                             if (helpSeekerController.country.value.isEmpty) {
