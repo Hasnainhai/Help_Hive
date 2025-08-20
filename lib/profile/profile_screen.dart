@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:helpers_hive/profile/controller/helper_profile_controller.dart';
@@ -82,20 +81,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController briefDescriptionController =
       TextEditingController();
   bool isPresent = false;
-  File? _cvFile;
+  // File? _cvFile;
 
-  Future<void> _pickCV() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf', 'doc', 'docx'],
-    );
+  // Future<void> _pickCV() async {
+  //   FilePickerResult? result = await FilePicker.platform.pickFiles(
+  //     type: FileType.custom,
+  //     allowedExtensions: ['pdf', 'doc', 'docx'],
+  //   );
 
-    if (result != null && result.files.single.path != null) {
-      setState(() {
-        _cvFile = File(result.files.single.path!);
-      });
-    }
-  }
+  //   if (result != null && result.files.single.path != null) {
+  //     setState(() {
+  //       _cvFile = File(result.files.single.path!);
+  //     });
+  //   }
+  // }
 
   Future<void> _pickImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
