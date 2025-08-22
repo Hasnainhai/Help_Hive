@@ -449,9 +449,11 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder:
                   (context, index) => GestureDetector(
                     onTap:
-                        () => _navigateToProfileDetails(
-                          context,
-                          featuredProfiles[index],
+                        () => Get.to(
+                          () => HelpSeekerDetailsScreen(
+                            profile: recommendedProfiles[index],
+                            userRole: widget.userRole,
+                          ),
                         ),
                     child: Container(
                       width: 220,
@@ -500,10 +502,13 @@ class _HomeScreenState extends State<HomeScreen> {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap:
-                    () => _navigateToProfileDetails(
-                      context,
-                      recommendedProfiles[index],
+                    () => Get.to(
+                      () => HelpSeekerDetailsScreen(
+                        profile: recommendedProfiles[index],
+                        userRole: widget.userRole,
+                      ),
                     ),
+
                 child: Card(
                   elevation: 1,
                   margin: const EdgeInsets.only(bottom: 16),
@@ -543,23 +548,6 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         ],
-      ),
-    );
-  }
-
-  // Navigation function
-  void _navigateToProfileDetails(
-    BuildContext context,
-    HelpSeekerProfile profile,
-  ) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder:
-            (context) => HelpSeekerDetailsScreen(
-              profile: profile,
-              userRole: widget.userRole,
-            ),
       ),
     );
   }
