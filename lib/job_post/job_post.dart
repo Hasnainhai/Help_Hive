@@ -1,45 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
-import 'package:helpers_hive/utils/widgets/next_button.dart';
+import '../controller/menu/job_post_controller.dart';
 import '../utils/colors.dart';
 import '../utils/widgets/brief_description.dart';
+import '../utils/widgets/next_button.dart';
 
-class JobPost extends StatefulWidget {
+class JobPost extends StatelessWidget {
   const JobPost({super.key});
 
   @override
-  State<JobPost> createState() => _JobPostState();
-}
-
-class _JobPostState extends State<JobPost> {
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-
-  final List<String> salaryRanges = [
-    'QAR 500 - 1000',
-    'QAR 2000 - 3000',
-    'QAR 3000 - 4000',
-  ];
-  final List<String> workingHours = List.generate(
-    12,
-    (index) => '${index + 1}',
-  );
-  final List<String> countries = [
-    'Saudi Arabia',
-    'Bahrain',
-    'Kuwait',
-    'Oman',
-    'Qatar',
-    'Iraq',
-  ];
-  String? selectedSalaryRange;
-  String? selectedWorkingHours;
-  String? selectedCountry;
-  String jobType = 'Full Time';
-
-  @override
   Widget build(BuildContext context) {
+    final controller = Get.put(JobPostController());
+
     return Scaffold(
       appBar: AppBar(title: const Text('Post a Job')),
       body: SingleChildScrollView(
@@ -53,34 +25,25 @@ class _JobPostState extends State<JobPost> {
             ),
             const SizedBox(height: 5),
             DropdownButtonFormField<String>(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.grey[200],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-              value: titleController.text.isEmpty ? null : titleController.text,
+              decoration: _dropdownDecoration(),
+              value:
+                  controller.titleController.text.isEmpty
+                      ? null
+                      : controller.titleController.text,
               hint: const Text("Select Role"),
               items:
                   ['Nanny', 'Home Cleaner', 'House Maid']
                       .map(
-                        (role) => DropdownMenuItem<String>(
-                          value: role,
-                          child: Text(role),
-                        ),
+                        (role) =>
+                            DropdownMenuItem(value: role, child: Text(role)),
                       )
                       .toList(),
-              onChanged: (value) {
-                setState(() {
-                  titleController.text = value!;
-                });
-              },
+              onChanged: (value) => controller.setRole(value!),
             ),
+
             CustomBriefDescriptionField(
               label: "Job Description",
-              controller: descriptionController,
+              controller: controller.descriptionController,
               maxLength: 500,
             ),
 
@@ -89,35 +52,29 @@ class _JobPostState extends State<JobPost> {
               "Job Type",
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: RadioListTile<String>(
-                    title: const Text('Full Time'),
-                    value: 'Full Time',
-                    activeColor: primaryBg,
-                    groupValue: jobType,
-                    onChanged: (value) {
-                      setState(() {
-                        jobType = value!;
-                      });
-                    },
+            Obx(
+              () => Row(
+                children: [
+                  Expanded(
+                    child: RadioListTile<String>(
+                      title: const Text('Full Time'),
+                      value: 'Full Time',
+                      activeColor: primaryBg,
+                      groupValue: controller.jobType.value,
+                      onChanged: (value) => controller.setJobType(value!),
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: RadioListTile<String>(
-                    title: const Text('Part Time'),
-                    value: 'Part Time',
-                    activeColor: primaryBg,
-                    groupValue: jobType,
-                    onChanged: (value) {
-                      setState(() {
-                        jobType = value!;
-                      });
-                    },
+                  Expanded(
+                    child: RadioListTile<String>(
+                      title: const Text('Part Time'),
+                      value: 'Part Time',
+                      activeColor: primaryBg,
+                      groupValue: controller.jobType.value,
+                      onChanged: (value) => controller.setJobType(value!),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
 
             const SizedBox(height: 8),
@@ -126,29 +83,22 @@ class _JobPostState extends State<JobPost> {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 5),
-            DropdownButtonFormField<String>(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.grey[200],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
-                ),
+            Obx(
+              () => DropdownButtonFormField<String>(
+                decoration: _dropdownDecoration(),
+                value: controller.selectedWorkingHours.value,
+                hint: const Text("Select Working Hours"),
+                items:
+                    controller.workingHours
+                        .map(
+                          (hour) => DropdownMenuItem(
+                            value: hour,
+                            child: Text('$hour Hour${hour == '1' ? '' : 's'}'),
+                          ),
+                        )
+                        .toList(),
+                onChanged: (value) => controller.setWorkingHours(value!),
               ),
-              value: selectedWorkingHours,
-              hint: const Text("Select Working Hours"),
-              items:
-                  workingHours.map((hour) {
-                    return DropdownMenuItem<String>(
-                      value: hour,
-                      child: Text('$hour Hour${hour == '1' ? '' : 's'}'),
-                    );
-                  }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  selectedWorkingHours = value;
-                });
-              },
             ),
 
             const SizedBox(height: 16),
@@ -157,29 +107,22 @@ class _JobPostState extends State<JobPost> {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 5),
-            DropdownButtonFormField<String>(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.grey[200],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
-                ),
+            Obx(
+              () => DropdownButtonFormField<String>(
+                decoration: _dropdownDecoration(),
+                value: controller.selectedSalaryRange.value,
+                hint: const Text("Select Salary Range"),
+                items:
+                    controller.salaryRanges
+                        .map(
+                          (range) => DropdownMenuItem(
+                            value: range,
+                            child: Text(range),
+                          ),
+                        )
+                        .toList(),
+                onChanged: (value) => controller.setSalaryRange(value!),
               ),
-              value: selectedSalaryRange,
-              hint: const Text("Select Salary Range"),
-              items:
-                  salaryRanges.map((range) {
-                    return DropdownMenuItem<String>(
-                      value: range,
-                      child: Text(range),
-                    );
-                  }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  selectedSalaryRange = value;
-                });
-              },
             ),
 
             const SizedBox(height: 16),
@@ -188,41 +131,39 @@ class _JobPostState extends State<JobPost> {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 5),
-            DropdownButtonFormField<String>(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.grey[200],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
-                ),
+            Obx(
+              () => DropdownButtonFormField<String>(
+                decoration: _dropdownDecoration(),
+                value: controller.selectedCountry.value,
+                hint: const Text("Select Country"),
+                items:
+                    controller.countries
+                        .map(
+                          (country) => DropdownMenuItem(
+                            value: country,
+                            child: Text(country),
+                          ),
+                        )
+                        .toList(),
+                onChanged: (value) => controller.setCountry(value!),
               ),
-              value: selectedCountry,
-              hint: const Text("Select Country"),
-              items:
-                  countries.map((country) {
-                    return DropdownMenuItem<String>(
-                      value: country,
-                      child: Text(country),
-                    );
-                  }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  selectedCountry = value;
-                });
-              },
             ),
 
             const SizedBox(height: 20),
-            NextButton(
-              label: 'Post a Job',
-              onPressed: () {
-                Get.back();
-                // Handle submission logic
-              },
-            ),
+            NextButton(label: 'Post a Job', onPressed: controller.submitJob),
           ],
         ),
+      ),
+    );
+  }
+
+  InputDecoration _dropdownDecoration() {
+    return InputDecoration(
+      filled: true,
+      fillColor: Colors.grey[200],
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide.none,
       ),
     );
   }
